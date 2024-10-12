@@ -2,7 +2,7 @@
 
 a fighting game available and made with [TIC-80](https://tic80.com).
 
-Game is playable at [TIC-80 website]()
+Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
 
 ## To-do
 
