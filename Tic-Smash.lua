@@ -6,16 +6,10 @@
 -- script:  lua
 -- saveid: TIC-Smash_hayattgd
 
---[[
-CREDITS
+--CREDITS:
+--https://github.com/hayattgd/TIC-Smash#credits
 
-Super Smash Bros. by Nintendo
-Nesbox (Character)
-8-BIT Panda by btco (Character/Tile)
---]]
-
---sorry i got bad code
---but dw i know how to done this :)
+--im updating this :)
 
 local initialized = false
 
@@ -25,13 +19,13 @@ local mapid = 0
 
 tilecolor = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	13,13,13,14,10,10,10,9, 3, 3, 3, 2, 5, 6, 0, 0,
-	13,14,13,14,10,9, 10,9, 3, 2, 3, 2, 3, 6, 0, 0,
-	13,13,13,14,10,10,10,9, 3, 3, 3, 2, 13,6, 0, 0,
+	13,13,13,14,10,10,10,9, 3, 3, 3, 2, 5, 3, 0, 0,
+	13,14,13,14,10,9, 10,9, 3, 2, 3, 2, 3, 3, 0, 0,
+	13,13,13,14,10,10,10,9, 3, 3, 3, 2, 13,3, 0, 0,
 	14,14,14,14,9, 9, 9, 9, 2, 2, 2, 2, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	13,14,14,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	14,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -59,7 +53,7 @@ mappal={
 	},
 	{
 		{0x1A, 0x1C, 0x2C},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0xEF, 0x7D, 0x57},{0xFF, 0xCD, 0x75},{0xA7, 0xF0, 0x70},{0x38, 0xB7, 0x64},{0x25, 0x71, 0x79},
-		{0x29, 0x36, 0x6F},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xF4, 0xF4, 0xF4},{0x94, 0xB0, 0xC2},{0x56, 0x6C, 0x86},{0x33, 0x3C, 0x57}
+		{0x29, 0x36, 0x6F},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xFF, 0xFF, 0xFF},{0xB6, 0xB6, 0xB6},{0x56, 0x6C, 0x86},{0x3C, 0x3C, 0x3C}
 	},
 	{
 		{0x1A, 0x1C, 0x2C},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0xEF, 0x7D, 0x57},{0xFF, 0xCD, 0x75},{0xA7, 0xF0, 0x70},{0x38, 0xB7, 0x64},{0x25, 0x71, 0x79},
@@ -82,6 +76,8 @@ local bdrid = 0
 local scene = "INTRO"
 
 local camerapos
+
+sfunc = {}
 
 Vector2 = {}
 Characters = {}
@@ -153,12 +149,18 @@ end
 local P1spawn = Vector2.new(0, 0)
 local P2spawn = Vector2.new(0, 0)
 
-function Players.new(c, v, npc)
-	return {chara=c, pos=v, hp=0.0, hitstop=0, flip=0, velocity=Vector2.new(0, 0), doublejumps=0, frame=0, base = 0, attacks=0, animuntil=0, lastgrounded=0, jumped=-10, score=0, npc=npc, button={false, false, false, false, false, false}, buttonpress={false, false, false, false, false, false}}
+function sfunc.new(f, duration, func, tbl, timing)
+	tbl = tbl or {}
+	timing = timing or 0
+	return {frame=f, duration=duration, func=func, tbl=tbl, timing=timing}
 end
 
-function Characters.new(n, col, acol, ck, sid, st, df, wgt, iconsprid, iconck)
-	return {name=n, color=col, altcolor=acol, colorkey=ck, sprid=sid, str=st, def=df, weight=wgt, iconid=iconsprid, iconcolorkey=iconck}
+function Players.new(c, v, npc)
+	return {chara=c, pos=v, hp=0.0, hitstop=0, flip=0, velocity=Vector2.new(0, 0), doublejumps=0, frame=0, base = 0, attacks=0, animuntil=0, lastgrounded=0, jumped=-10, score=0, npcv={jumped=0}, npc=npc, sfunc={}, button={false, false, false, false, false, false}, buttonpress={false, false, false, false, false, false}}
+end
+
+function Characters.new(n, col, acol, ck, sid, st, wgt, special, splength, charaAI, iconsprid, iconck)
+	return {name=n, color=col, altcolor=acol, colorkey=ck, sprid=sid, str=st, weight=wgt, special=special, speciallength=splength, charaAI=charaAI, iconid=iconsprid, iconcolorkey=iconck}
 end
 
 function Particles.new(id, pos, tbl)
@@ -189,8 +191,81 @@ function Init()
 	cls(0)
 	poke(0x03FF8, 0)
 	
-	table.insert(Characters, Characters.new("Nesbox", 10, 9, 0, 256, 5, 3 ,2, 462, 5))
-	table.insert(Characters, Characters.new("hayattgd", 12, 13, 0, 264, 4, 3 ,3, 494, 5))
+	table.insert(Characters, Characters.new("Nesbox", 10, 9, 0, 256, 5, 5,
+	function(player, opponent)
+		table.insert(player.sfunc, sfunc.new(frames, 15, function(player)
+			print("dmgcirc()|", player.pos.x - camerapos.x - 25, player.pos.y - camerapos.y - 11, 14)
+			print("dmgcirc()|", player.pos.x - camerapos.x - 24, player.pos.y - camerapos.y - 12, 12)
+		end, player))
+		table.insert(player.sfunc, sfunc.new(frames, 45, function(player)
+			circ(player.pos.x - camerapos.x + 3, player.pos.y - camerapos.y + 5, 17, 9)
+			circ(player.pos.x - camerapos.x + 4, player.pos.y - camerapos.y + 4, 17, 9)
+			circb(player.pos.x - camerapos.x + 4, player.pos.y - camerapos.y + 4, 17, 11)
+		end, player, 1))
+
+		table.insert(player.sfunc, sfunc.new(frames+15, 15, function(player)
+			print("> |", player.pos.x - camerapos.x - 25, player.pos.y - camerapos.y - 11, 14)
+			print("> |", player.pos.x - camerapos.x - 24, player.pos.y - camerapos.y - 12, 12)
+		end, player))
+		
+		table.insert(player.sfunc, sfunc.new(frames+30, 15, function(player)
+			print("> run|", player.pos.x - camerapos.x - 25, player.pos.y - camerapos.y - 11, 14)
+			print("> run|", player.pos.x - camerapos.x - 24, player.pos.y - camerapos.y - 12, 12)
+		end, player))
+		
+		table.insert(player.sfunc, sfunc.new(frames+45, 0, function(player)
+			local dist = Vector2.distance(opponent.pos + Vector2.new(4, 4), player.pos + Vector2.new(4, 4))
+			if dist < 17 then
+				opponent.hitstop = opponent.hitstop + dist * 0.6
+				Smash(player.pos, player.velocity, Characters[player.chara].str, opponent)
+			end
+		end, player))
+	end, 60,
+	
+	function (player, opponent)
+		if Vector2.distance(player.pos, opponent.pos) > 32 and opponent.hp < 75 and (Vector2.magnitude(opponent.velocity) < 0.8 or opponent.hitstop > 1) then
+			return true
+		else
+			return false
+		end
+	end, 462, 5))
+
+	table.insert(Characters, Characters.new("hayattgd", 12, 13, 0, 264, 4, 6,
+	function(player, opponent, id)
+		if id == 1 then
+			id = 2
+		else
+			id = 1
+		end
+
+		table.insert(Particles, Particles.new(3, player.pos + Vector2.new(4, 4), {id=id, damage=Characters[player.chara].str * 0.5, flip=player.flip}))
+	end, 20,
+	
+	function (player, opponent)
+		if opponent.pos.y + opponent.velocity.y * 5 + 16 > player.pos.y + player.velocity.y * 5 + 4 and opponent.pos.y + opponent.velocity.y * 5 - 8 < player.pos.y + player.velocity.y * 5 + 4 and (Vector2.magnitude(opponent.velocity) < 0.4 or Vector2.distance(player.pos, opponent.pos) < 4) then
+			return true
+		else
+			return false
+		end
+	end, 494, 5))
+
+	table.insert(Characters, Characters.new("8-BIT Panda", 13, 14, 0, 272, 7, 3,
+	function(player, opponent)
+	
+	end, 5,
+	
+	function (player, opponent)
+		
+	end))
+
+	table.insert(Characters, Characters.new("STELE", 9, 5, 0, 280, 4, 7,
+	function(player, opponent)
+	
+	end, 5,
+	
+	function (player, opponent)
+		
+	end))
 end
 
 function StartBattle(mid, pid1, pid2)
@@ -211,7 +286,7 @@ function Smash(pos, vel, str, target)
 
 	local dist = target.pos - pos
 
-	local smashvel = Vector2.normailze(dist * 0.5 + vel * 4 + Vector2.new(0, -2)) * (target.hp * 0.02 + 0.7) * (2 + str * 0.17)
+	local smashvel = Vector2.normailze(dist * 3 + vel * 1) * (math.abs(target.hp - Characters[target.chara].weight * 0.5) * 0.02 + 0.7) * (2 + str * 0.17)
 	smashvel.y = smashvel.y * 0.9
 
 	local magnitude = Vector2.magnitude(smashvel)
@@ -233,134 +308,8 @@ function CharacterBehaviour(id)
 	if id == 1 then opponentid = 2 end
 
 	local opponent = Players[opponentid]
-	
+
 	----Tick
-	if not player.npc then
-		player.button = {
-			btn(0 + (id-1)*8),
-			btn(1 + (id-1)*8),
-			btn(2 + (id-1)*8),
-			btn(3 + (id-1)*8),
-			btn(4 + (id-1)*8),
-			btn(5 + (id-1)*8),
-			btn(6 + (id-1)*8),
-			btn(7 + (id-1)*8)
-		}
-		
-		player.buttonpress = {
-			btnp(0 + (id-1)*8),
-			btnp(1 + (id-1)*8),
-			btnp(2 + (id-1)*8),
-			btnp(3 + (id-1)*8),
-			btnp(4 + (id-1)*8),
-			btnp(5 + (id-1)*8),
-			btnp(6 + (id-1)*8),
-			btnp(7 + (id-1)*8)
-		}
-	else
-		local opponentvelpos = opponent.pos + opponent.velocity * 4
-		local dist = Vector2.distance(player.pos, opponentvelpos)
-		--print(player.pos.x, 2, 2)
-		--print(player.pos.y, 2, 12)
-		--print(dist, 2, 22)
-		player.button = {false, false, false, false, false, false, false, false}
-		player.buttonpress = {false, false, false, false, false, false, false, false}
-
-		--Aggressive
-		if player.pos.y > opponentvelpos.y - 24 and player.pos.y < opponentvelpos.y+16 then
-			if dist > 5 and player.animuntil + 6 < frames and player.pos.y > opponentvelpos.y - 4 and player.pos.y < opponentvelpos.y+2 then
-				player.buttonpress[6] = true
-			elseif player.animuntil + math.random(2, 6) < frames then
-				player.buttonpress[5] = true
-			end
-
-			if player.animuntil - 5 > frames then
-				if player.pos.x > opponentvelpos.x then
-					player.button[4] = true
-				else
-					player.button[3] = true
-				end
-	
-				if player.pos.y < opponentvelpos.y then
-					if player.jumped + 5 < frames then
-						player.buttonpress[1] = true
-					end
-				else
-					player.button[2] = true
-				end
-			else
-				if player.pos.x > opponent.pos.x then
-					player.button[3] = true
-				else
-					player.button[4] = true
-				end
-	
-				if player.pos.y < opponent.pos.y then
-					player.button[2] = true
-				elseif player.jumped + 5 < frames then
-					player.buttonpress[1] = true
-				end
-			end
-		else
-			if player.pos.x > opponentvelpos.x+16 and player.pos.x < opponentvelpos.x-8 then
-				player.buttonpress[6] = false
-				player.buttonpress[5] = true
-				if player.pos.y < opponentvelpos.y then
-					player.button[2] = true
-				elseif player.jumped + 5 < frames then
-					player.buttonpress[1] = true
-				end
-			end
-
-			if player.animuntil - 5 > frames then
-				if player.pos.x > opponentvelpos.x then
-					player.button[4] = true
-				else
-					player.button[3] = true
-				end
-			end
-
-			if player.pos.x > opponent.pos.x then
-				player.button[3] = true
-			else
-				player.button[4] = true
-			end
-
-			if player.pos.y < opponent.pos.y then
-				player.button[2] = true
-			elseif player.jumped + 5 < frames then
-				player.buttonpress[1] = true
-			end
-		end
-		
-		--Defensive
-		if player.pos.y > 68 and player.jumped + 27 < frames then
-			player.buttonpress[1] = true
-			player.button[2] = false
-		end
-
-		if player.pos.y > 83 and player.jumped + 27 < frames then
-			player.buttonpress[1] = true
-			player.button[2] = false
-		end
-		
-		if player.pos.y < 0 then
-			player.buttonpress[2] = true
-			player.button[2] = true
-		end
-
-		if not (player.pos.x > 80 and player.pos.x < 160) then
-			if player.pos.x > 120 then
-				player.button[3] = true
-				player.button[4] = false
-			else
-				player.button[3] = false
-				player.button[4] = true
-			end
-		end
-	end
-
-	--UI
 	local shake = 0
 	if player.hitstop > 0 then
 		shake = math.clamp(player.hitstop, 0, 2)
@@ -371,17 +320,20 @@ function CharacterBehaviour(id)
 		player.hp = math.floor((player.hp + player.hitstop) * 10) * 0.1
 		player.hitstop = 0
 	end
-	
+
 	--Physics
 	local touchingground = false
 	
 	player.pos.y = player.pos.y + player.velocity.y
 	local ychecktileidb = mget(mapid*30+(player.pos.x+4)//8, (player.pos.y+7)//8)
-	local ychecktileida = mget(mapid*30+(player.pos.x+4)//8, (player.pos.y)//8)
-	if fget(ychecktileidb, 0) or fget(ychecktileida, 0) then
+	local ychecktileidbl = mget(mapid*30+(player.pos.x)//8, (player.pos.y+7)//8)
+	local ychecktileidbr = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y+7)//8)
+	local ychecktileidal = mget(mapid*30+(player.pos.x)//8, (player.pos.y)//8)
+	local ychecktileidar = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y)//8)
+	if fget(ychecktileidbl, 0) or fget(ychecktileidbr, 0) or fget(ychecktileidal, 0) or fget(ychecktileidar, 0) then
 		player.pos.y = player.pos.y - player.velocity.y
 		player.velocity.y = 0
-	elseif fget(ychecktileidb, 1) and player.velocity.y > 0 and player.pos.y < (player.pos.y+7)//8*8-4 and not player.button[2] then
+	elseif fget(ychecktileidb, 1) and player.velocity.y > 0 and player.pos.y < (player.pos.y+7)//8*8-6 and not player.button[2] then
 		touchingground = true
 		player.pos.y = player.pos.y - player.velocity.y
 		player.velocity.y = 0
@@ -390,9 +342,11 @@ function CharacterBehaviour(id)
 	player.velocity.y = player.velocity.y + 0.09
 	
 	player.pos.x = player.pos.x + player.velocity.x
-	local lefttileid = mget(mapid*30+(player.pos.x)//8, (player.pos.y+4)//8)
-	local righttileid = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y+4)//8)
-	if fget(lefttileid, 0) or fget(righttileid, 0) then
+	local lefttileida = mget(mapid*30+(player.pos.x)//8, (player.pos.y)//8)
+	local lefttileidb = mget(mapid*30+(player.pos.x)//8, (player.pos.y+7)//8)
+	local righttileida = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y)//8)
+	local righttileidb = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y+7)//8)
+	if fget(lefttileida, 0) or fget(lefttileidb, 0) or fget(righttileida, 0) or fget(righttileidb, 0) then
 		player.pos.x = player.pos.x - player.velocity.x
 		player.velocity.x = 0
 	else
@@ -433,6 +387,8 @@ function CharacterBehaviour(id)
 		player.velocity = Vector2.new(0, 0)
 		player.animuntil = 0
 		player.hitstop = 0
+		player.sfunc = { }
+		player.doublejumps = 0
 
 		sfx(11, -1, -1, 2)
 
@@ -444,6 +400,112 @@ function CharacterBehaviour(id)
 			player.pos = P2spawn
 		end
 	end
+
+	--Input handler
+	if not player.npc then
+		player.button = {
+			btn(0 + (id-1)*8),
+			btn(1 + (id-1)*8),
+			btn(2 + (id-1)*8),
+			btn(3 + (id-1)*8),
+			btn(4 + (id-1)*8),
+			btn(5 + (id-1)*8),
+			btn(6 + (id-1)*8),
+			btn(7 + (id-1)*8)
+		}
+		
+		player.buttonpress = {
+			btnp(0 + (id-1)*8),
+			btnp(1 + (id-1)*8),
+			btnp(2 + (id-1)*8),
+			btnp(3 + (id-1)*8),
+			btnp(4 + (id-1)*8),
+			btnp(5 + (id-1)*8),
+			btnp(6 + (id-1)*8),
+			btnp(7 + (id-1)*8)
+		}
+	else
+		local opponentvelpos = opponent.pos + opponent.velocity * 4
+		local dist = Vector2.distance(player.pos, opponentvelpos)
+		player.button = {false, false, false, false, false, false, false, false}
+		player.buttonpress = {false, false, false, false, false, false, false, false}
+
+		--Aggressive
+		if (player.animuntil - 50 > frames or opponent.animuntil - 5 > frames and opponent.doublejumps < 2) and (opponent.pos.x > 90 and opponent.pos.x < 150) then
+			if player.pos.x < opponentvelpos.x then
+				player.button[3] = true
+			else
+				player.button[4] = true
+			end
+
+			if player.pos.y - 2 > opponentvelpos.y then
+				player.buttonpress[2] = true
+				player.button[2] = true
+			elseif player.npcv.jumped + 24 < frames then
+				player.buttonpress[1] = true
+			end
+		else
+			if player.pos.x > opponentvelpos.x then
+				player.button[3] = true
+			else
+				player.button[4] = true
+			end
+
+			if player.pos.y - 2 < opponentvelpos.y then
+				player.buttonpress[2] = true
+				player.button[2] = true
+			elseif player.npcv.jumped + 24 < frames then
+				player.buttonpress[1] = true
+			end
+		end
+
+		if Vector2.distance(player.pos, opponentvelpos) < 64 then
+			if player.animuntil + math.random(2,15) < frames then
+				player.buttonpress[5] = true
+			end
+		end
+		
+		--Defensive
+		if player.pos.y > 60 then
+			player.button[2] = false
+		end
+
+		if player.pos.y > 70 and player.npcv.jumped + 12 + Vector2.distance(player.pos, Vector2.new(120, player.pos.y)) * 0.05 < frames then
+			player.buttonpress[1] = true
+		end
+		
+		if player.pos.y < 0 then
+			player.buttonpress[2] = true
+			player.button[2] = true
+		end
+
+		if not (player.pos.x > 90 + player.hp * 0.2 and player.pos.x < 150 - player.hp * 0.2) then
+			if player.pos.x > 120 then
+				player.button[3] = true
+				player.button[4] = false
+			else
+				player.button[3] = false
+				player.button[4] = true
+			end
+
+			if player.pos.y > 78 then
+				player.button[2] = false
+			end
+		end
+		
+		if player.pos.y > 78 and (player.pos.x > 60 and player.pos.x < 170) then
+			if player.pos.x < 120 then
+				player.button[3] = true
+				player.button[4] = false
+			else
+				player.button[3] = false
+				player.button[4] = true
+			end
+		end
+
+		player.buttonpress[6] = chara.charaAI(player, opponent)
+		if player.buttonpress[6] then player.button[5] = false player.buttonpress[5] = false end
+	end
 	
 	----Control
 	if player.hitstop == 0 then
@@ -453,6 +515,7 @@ function CharacterBehaviour(id)
 		
 		if player.buttonpress[1] then
 			if player.doublejumps < 2 then
+				player.npcv.jumped = frames
 				player.jumped = frames + 30
 				sfx(7)
 				if player.doublejumps ~= 0 then
@@ -476,46 +539,45 @@ function CharacterBehaviour(id)
 		if player.buttonpress[2] then
 			player.jumped = -10
 		end
+	end
 		
-		--Action
-		if player.animuntil + 1 < frames then
-			if player.buttonpress[5] then
-				player.attacks = player.attacks + 1
-				if grounded then
-					player.base = 4 + math.floor(player.attacks % 2)
-					player.animuntil = frames + 2
-					
-					spriteid = sprid + player.base
-					if posOnRect(player.pos.x + 4 + player.flip * -27, player.pos.y - 5, 27, 19, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
-						opponent.hitstop = opponent.hitstop + chara.str * 0.2
-						Smash(player.pos, player.velocity, chara.str, opponent)
-					else
-						sfx(8, 0, 20, 1)
-					end
-
-				else
-					player.base = 3
-					player.frame = 0
-					player.animuntil = frames + 4
-					spriteid = sprid + player.base
-
-					if posOnRect(player.pos.x - 5, player.pos.y - 5, 18, 24, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
-						opponent.hitstop = opponent.hitstop + chara.str * 0.1 + math.clamp(math.floor(player.velocity.y * 7) * 0.1, chara.str * 0.1, chara.str * 3)
-						Smash(player.pos, player.velocity, chara.str, opponent)
-					else
-						sfx(8)
-					end
-				end
-			elseif player.buttonpress[6] then
-				player.attacks = player.attacks + 1
-				player.base = 6 + math.floor(player.attacks % 2)
-				player.animuntil = frames + 55
+	--Action
+	if player.animuntil < frames then
+		if player.buttonpress[5] then
+			player.attacks = player.attacks + 1
+			if grounded then
+				player.base = 4 + math.floor(player.attacks % 2)
+				player.animuntil = frames + 3
 				
 				spriteid = sprid + player.base
+				if posOnRect(player.pos.x + 4 + player.flip * -27, player.pos.y - 5, 27, 19, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
+					opponent.hitstop = opponent.hitstop + chara.str * 0.2
+					Smash(player.pos, player.velocity, chara.str, opponent)
+				else
+					sfx(8, 0, 20, 1)
+				end
 
-				local tbl = {id = opponentid, damage=chara.str * 0.7, flip=player.flip}
-				table.insert(Particles, Particles.new(3, Vector2.new(0, player.pos.y), tbl))
+			else
+				player.base = 3
+				player.frame = 0
+				player.animuntil = frames + 10
+				spriteid = sprid + player.base
+
+				if posOnRect(player.pos.x - 5, player.pos.y - 5, 18, 24, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
+					opponent.hitstop = opponent.hitstop + chara.str * 0.1 + math.clamp(math.floor(player.velocity.y * 7) * 0.1, chara.str * 0.1, chara.str * 3)
+					Smash(player.pos, player.velocity, chara.str, opponent)
+				else
+					sfx(8)
+				end
 			end
+		elseif player.buttonpress[6] then
+			player.attacks = player.attacks + 1
+			player.base = 6 + math.floor(player.attacks % 2)
+			player.animuntil = frames + chara.speciallength
+			
+			spriteid = sprid + player.base
+
+			chara.special(player, opponent, id)
 		end
 	end
 	
@@ -530,9 +592,15 @@ function CharacterBehaviour(id)
 	trec(UIx + 19,117,46,12,chara.altcolor,223,1,1,-1,0)
 	trec(UIx + 10,111,16,16,0,223,1,1,-1,24)
 	trec(UIx + 10,110,16,16,chara.color,223,1,1,-1,24)
-	trec(UIx + 9,110,16,16,chara.iconid%16*8,chara.iconid//16*8,16,16,chara.iconcolorkey,0)
+	if chara.iconid then
+		trec(UIx + 10,109,16,16,chara.iconid%16*8,chara.iconid//16*8,16,16,chara.iconcolorkey,0)
+	else
+		trec(UIx + 10,109,16,16,chara.sprid%16*8,chara.sprid//16*8,8,8,0,0)
+	end
 	print(chara.name, UIx + 26, 127, 0)
 	print(chara.name, UIx + 26, 126, chara.color)
+	print(player.score, UIx + 58, 115, 0, false, 1, true)
+	print(player.score, UIx + 59, 114, 12, false, 1, true)
 	
 	local hpcolor = 12
 	if player.hp > 200 then
@@ -574,27 +642,25 @@ function RenderParticle()
 
 		function(idx, pos, spawned, tbl)
 			local mul = 1
-			local startx = -78
 			local rot = 0
 
 			if tbl.flip == 1 then
 				mul = -1
-				startx = 320
-				rot = 3.14159
+				rot = math.pi
 			end
 
-			local cpos = Vector2.new(startx + (frames - spawned) * 9 * mul, pos.y)
-			trec(cpos.x - camerapos.x, cpos.y - camerapos.y, 24, 8, (tbl.id-1)*24, 224, 24, 8, 0, rot)
+			local cpos = Vector2.new(pos.x + (frames - spawned) * 8 * mul - 12, pos.y - 4)
+			trec(cpos.x - camerapos.x, cpos.y - camerapos.y, 24, 8, 0, 224, 24, 8, 0, rot)
 
 			local player = Players[tbl.id]
 			local playerpos = player.pos + Vector2.new(4, 4)
 
 			if posOnRect(cpos.x, cpos.y, 24, 8, playerpos) then
-				player.hitstop = player.hitstop + tbl.damage
-				Smash(cpos + Vector2.new(12, 4), Vector2.new(9 * mul, 0), tbl.damage * 1.3, player)
+				player.hitstop = player.hitstop + tbl.damage * 0.2
+				Smash(cpos + Vector2.new(12, 4), Vector2.new(9 * mul, 0), tbl.damage * 0.7, player)
 			end
 
-			if frames - spawned > 60 then
+			if frames - spawned > 80 then
 				table.remove(Particles, idx)
 			end
 		end
@@ -605,24 +671,38 @@ function RenderParticle()
 	end
 end
 
+function ProcessScheduledFunc(timing, sfunc)
+	for idx, value in ipairs(sfunc) do
+		if value.timing == timing then
+			if value.frame == frames or (value.frame + value.duration > frames and value.frame < frames) then
+				value.func(value.tbl)
+			elseif value.frame +  value.duration < frames then
+				table.remove(sfunc, idx)
+			end
+		end
+	end
+end
+
 
 function BOOT()
 	Init()
-	StartBattle(2, 1, 2)
+	StartBattle(math.random(0, 3), math.random(1, 4), math.random(1, 4))
 end
 
 Init()
 
 function BDR(l)
+	--Rainbow effect
+	--https://tic80.com/play?cart=4034
+	--by LeaderJord
 	local c = {
 		{0x29, 0x36, 0x6f},
 		{0x3b, 0x5d, 0xc9},
 		{0x41, 0xa6, 0xf6},
 		{0x73, 0xef, 0xf7}
 	}
-	poke(0x03FF8, 1)
 
-	t=l/136*math.pi*2-(frames/16)
+	t=l/16*math.pi*2-(frames/16)
 	r=math.sin(t)*127+128
 	g=math.sin(t+math.pi*2/3)*127+128
 	b=math.sin(t+math.pi*2*2/3)*127+128
@@ -847,15 +927,21 @@ function TIC()
 		local destination = (Players[1].pos + Players[2].pos) * 0.5 - Vector2.new(112, 60)
 		camerapos = Vector2.lerp(camerapos, destination, 0.05)
 		camerapos = Vector2.new(math.clamp(camerapos.x, -52, 52), math.clamp(camerapos.y, -72, 48))
+		ProcessScheduledFunc(1, Players[1].sfunc)
+		ProcessScheduledFunc(1, Players[2].sfunc)
+
 		map(mapid*30, 0, 30, 17, -camerapos.x, -camerapos.y, 0, 1, remap)
 		
 		CharacterBehaviour(1)
 		CharacterBehaviour(2)
+
+		ProcessScheduledFunc(0, Players[1].sfunc)
+		ProcessScheduledFunc(0, Players[2].sfunc)
 		
 		RenderParticle()
 	end
 
-	rectb(0, 0, 240, 136, 15)
+	rectb(0, 0, 240, 136, 13)
 	
 	frames = frames + 1
 end
@@ -994,7 +1080,7 @@ end
 -- 026:33333330333333332222233322222233222222332222223322222233f2222233
 -- 027:2333333302333333000000000000000000000000000000000000000000000000
 -- 028:7676767677777777232223222222222222232232222222222322322322222222
--- 029:7676767607777777000000000000000000000000000000000000000000000000
+-- 029:3333333303232323000000000000000000000000000000000000000000000000
 -- 032:ddeeeeffddeeeeffddeeeeffddeeeeffddeeeeffddeeeeffddeeeeffddeeeeff
 -- 033:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 -- 034:ffeeeeddffeeeeddffeeeeddffeeeeddffeeeeddffeeeeddffeeeeddffeeeedd
@@ -1008,7 +1094,7 @@ end
 -- 042:2f222233f22222332f222233f22222332f222233f22222332f222233f2222233
 -- 043:3333333333333333000000000000000000000000000000000000000000000000
 -- 044:2223222322222222232223222222222222232232222222222322322322222222
--- 045:7676767677777777000000000000000000000000000000000000000000000000
+-- 045:3333333323232323000000000000000000000000000000000000000000000000
 -- 048:ddeeeeffddeeeeefddeeeeeeddeeeeeeddeeeeeedddeeeeedddddddd0ddddddd
 -- 049:ffffffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedddddddddddddddd
 -- 050:ffeeeeddfeeeeeddeeeeeeddeeeeeeddeeeeeeddeeeeedddddddddddddddddd0
@@ -1022,7 +1108,7 @@ end
 -- 058:2f222233f2222233222222332222223322222233222223333333333333333330
 -- 059:3333333233333320000000000000000000000000000000000000000000000000
 -- 060:eeedeeedeeeeeeeeedeeedeeeeeeeeeeeeedeedeeeeeeeeeedeedeedeeeeeeee
--- 061:7676767677777770000000000000000000000000000000000000000000000000
+-- 061:3333333323232320000000000000000000000000000000000000000000000000
 -- 064:fffffffffffffffffffeeeeeffeeeeeeffeeeeeeffeeeeeeffeeeeddffeeeedd
 -- 065:ffffffffffffffffeeeeefffeeeeeeffeeeeeeffeeeeeeffddeeeeffddeeeeff
 -- 066:ffeeeeddffeeeeddffeeeeeeffeeeeeeffeeeeeefffeeeeeffffffffffffffff
@@ -1035,6 +1121,13 @@ end
 -- 073:2f2f2f2ff2f2f2f222222f2f222222f22222222f222222f23322222f332222f2
 -- 074:2f222233f22222332f222222f22222222f222222f2f222222f2f2f2ff2f2f2f2
 -- 075:3322222f332222f22222222f222222f22222222f222222f22f2f2f2ff2f2f2f2
+-- 080:cccccccdcfddddffccddddcfcddddddfcddddddfcfddddffccddddcfffffffff
+-- 081:dfffdfffcddfcddfcccdcccdcccdcccdcddfcddfcddfcddfdfffdfffffffffff
+-- 082:dcccccdffdccddfffdccddffffddffffdcccccdffdccddfffdccddffffddffff
+-- 096:44044444fc400000fcfc0c0cf4f40404f4f00000ff0000000000000000000000
+-- 097:44444444000000000c0c0c0c0404040400000000000000000000000000000000
+-- 098:44444044000004cf0c0c0fcf04040f4f00000f4f000000ff0000000000000000
+-- 112:ffffffffffffffffffffffffff99ffffff99fffffffff9ffffffffffffffffff
 -- </TILES>
 
 -- <SPRITES>
@@ -1044,26 +1137,42 @@ end
 -- 003:0000000000dd0000088d88808aaaaaa88aaacfc80aaacfc88acaccc88aaacfc8
 -- 004:0088888008acccc008afcfc0d8acccc0ddaaaaa008aacca808aaaaa800880000
 -- 005:0088888008acccc008afcfc008acccc0ddaaaaa0d8aacca008a88aa000000088
--- 006:0088888008a22f4008a333f0d8abf550ddaaaaa008aacca008aaaaa000880880
--- 007:0088888008a55f2008a4fbb008a22f20ddaaaaa0d8aacca008aaaaa000880880
+-- 006:0088888008a12f4008a313f0d8a1f150ddaaaaa008aacca008aaaaa000880880
+-- 007:0088888008a51f1008a1f1b008a21f10ddaaaaa0d8aacca008aaaaa000880880
 -- 008:0e0000000eddddee0eddc8cf0ddeffff000ddd0000ddeef000deeef0000d0f00
 -- 009:0e0000000eddddee0eddc8cf0ddeffff000ddd0000ddeef000deeef000000f00
 -- 010:0e0000000eddddee0eddc8cf0ddeffff000ddd0000ddeef000deeef0000d0000
 -- 011:000000e00000dee00dd0ddd0deddedd00eedfcd00eedf8d0f0f0fce0000fffe0
 -- 012:0e0000000eddddee0eddc8cf0ddeffff000ddd00000deeff000eedd0000d0f00
 -- 013:0e0000000eddddee0eddc8cf0ddeffff000ddd00000deff0000eeedd000d0f00
--- 014:0b0000000eddddee0edd5a4f0ddeffff00ddddf000ddeef0000eee00000d0f00
--- 015:0b0000000eddddee0edd24bf0ddeffff00ddddf000ddeef0000eee00000d0f00
+-- 014:010000000eddddee0edd514f0ddeffff00ddddf000ddeef0000eee00000d0f00
+-- 015:010000000eddddee0edd21bf0ddeffff00ddddf000ddeef0000eee00000d0f00
 -- 016:00f00f0600cccc0600cfcf0600cccc060ffffffff0cccc0600fccf0000f00f00
 -- 017:000f0f06000ccc0600ccfc0600cccc0600ffffff00cccc0600ccc00000f00f00
 -- 018:000f0f06000ccc0600ccfc0600cccc0600ffffff00cccc0600ccc000000ff000
 -- 019:00000000f00000000cc000000ccfcc00fccfcccf00cfcfc0000fccc0006f6666
--- 020:0f00f0060cccc0060cfcf0600cccc0600fffff00fcccc6000fccf0000f00f000
--- 021:0f00f0000cccc0000cfcf6000ccccf000ffff060fcccc0600fccf0060f00f006
--- 022:0070070e0055550e0057570e0055550e077777777055550e0075570000700700
--- 023:00e00e0700dddd0700dede0700dddd070eeeeeeee0dddd0700edde0000e00e00
+-- 020:00f00f0600cccc0600cfcf0600cccc6000fffff00fcccc6000fccf0000f00f00
+-- 021:00f00f0000cccc0000cfcf6000ccccf000ffff600fcccc0600fccf0600f00f06
+-- 022:000000000055550000c1c1000055550000000000005555000005500000000000
+-- 023:0000000000222200004141000022220000000000004444000004400000000000
+-- 024:0055550005555550055444500544440003399300039499400533330000300300
+-- 025:0005555000555555055544455554444053399300039499400033330003000300
+-- 026:0005555000555555055544455554444053399300039499400033330000033000
+-- 027:0000000000000000005555000555555005544450054444000394994003300300
+-- 028:0005555000555555055544455554444055339300053999400003333000030000
+-- 029:0005555000555555055544455554444055339340053999000003330000300030
+-- 030:0001111000111111011144411114444011339990013999940033330003003000
+-- 031:000aaaa000aaaaaa0aaa444aaaa44440aa3399900a3999940033330003003000
 -- 176:0000000000000000000000000000000000000000000000000000000001234567
 -- 177:0000000000000000000000000000000000000000000000000000000089abcdef
+-- 178:aaaaaaa8aaaaaa88aa999988aa999988aa999988aa999988a888888888888888
+-- 179:cccccccecccccceeccddddeeccddddeeccddddeeccddddeeceeeeeeeeeeeeeee
+-- 180:4444444244444422443333224433332244333322443333224222222222222222
+-- 181:6666666866666688667777886677778866777788667777886888888888888888
+-- 182:5555555755555577556666775566667755666677556666775777777777777777
+-- 183:ccccccc3cccccc33cc444433cc444433cc444433cc444433c333333333333333
+-- 184:dddddddfddddddffddeeeeffddeeeeffddeeeeffddeeeeffdfffffffffffffff
+-- 185:bbbbbbb9bbbbbb99bbaaaa99bbaaaa99bbaaaa99bbaaaa99b999999999999999
 -- 192:0000000000000000089abbbb89abbbbb89abbbbb089abbbb0000000000000000
 -- 193:000000000089abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb0089abbb00000000
 -- 194:00000000bbbba980bbbbba98bbbbba98bbbbba98bbbbba98bbbba98000000000
@@ -1106,14 +1215,15 @@ end
 -- </SPRITES>
 
 -- <MAP>
--- 004:00000000000000000000000000313232330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d1d2d2d300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- 005:000000000000000000000010000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- 006:00000000000000000000313233000000003132330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d1d2d300000000d1d2d300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 004:00000000000000000000000000313232330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d1d2d2d300000000000000000000000000000000000000000000000000000616162600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 005:000000000000000000000010000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000200000000000000000000000000000000000000000000010000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 006:00000000000000000000313233000000003132330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d1d2d300000000d1d2d300000000000000000000000000000000000000000616260000000006162600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- 008:000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- 009:0000000000000000000111111111111111111111210000000000000000000000000000000000004151511111111191119191a1000000000000000000000000000000000000c1c1c1c1c1c1c1c1c1c1c1c1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- 010:00000000000000000003131412121212121204132300000000000000000000000000000000000043541252121212129212842300000000000000000000000000000000000000c2c2c2c2c2c2c2c2c2c200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- 011:00000000000000000000000314121212120423000000000000000000000000000000000000000000431314121212128413a3000000000000000000000000000000000000000000c3c3c3c3c3c3c3c30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- 012:00000000000000000000000003131313132300000000000000000000000000000000000000000000000003531313132300000000000000000000000000000000000000000000000000c3c3c3c300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 009:0000000000000000000111111111111111111111210000000000000000000000000000000000004151511111111191119191a1000000000000000000000000000000000000c1c1c1c1c1c1c1c1c1c1c1c1000000000000000000000000000000000000051515151515151515151505000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 010:00000000000000000003131412121212121204132300000000000000000000000000000000000043541252121212129212842300000000000000000000000000000000000000c2c2c2c2c2c2c2c2c2c200000000000000000000000000000000000000251212071212121207121225000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 011:00000000000000000000000314121212120423000000000000000000000000000000000000000000431314121212128413a3000000000000000000000000000000000000000000c3c3c3c3c3c3c3c30000000000000000000000000000000000000000051515051212121205151505000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 012:00000000000000000000000003131313132300000000000000000000000000000000000000000000000003531313132300000000000000000000000000000000000000000000000000c3c3c3c300000000000000000000000000000000000000000000000000251207121225000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 013:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000051515151505000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- </MAP>
 
 -- <WAVES>
@@ -1155,7 +1265,7 @@ end
 -- </TRACKS>
 
 -- <FLAGS>
--- 000:00000000000000000000000000000000101010201010102010101020102000001010102010101020101010201020000010101020101010201010102010200000101010101010101010101010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 000:00000000000000000000000000000000101010201010102010101020102000001010102010101020101010201020000010101020101010201010102010200000101010101010101010101010000000001010100000000000000000000000000020202000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- </FLAGS>
 
 -- <SCREEN>
