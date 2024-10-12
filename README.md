@@ -4,6 +4,11 @@ a fighting game available and made with [TIC-80](https://tic80.com).
 
 Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
 
+## Screenshots
+
+<img src="./Images/8-BIT_Panda_STELE.png" style="width:512px">
+<img src="./Images/STELE_Nesbox_hayattgd.png" style="width:512px">
+
 ## To-do
 
 ### Planned (v0.8)
@@ -32,14 +37,14 @@ Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
 
 **[Super Smash Bros.](https://www.smashbros.com/) by Nintendo**
 
-| Original                                           | Developer                                                  | Used Parts        |
-|----------------------------------------------------|------------------------------------------------------------|-------------------|
-|                                                    | [Nesbox](https://tic80.com/dev?id=1)                       | Icon              |
-| [8-BIT Panda](https://tic80.com/play?cart=188)     | [Bruno Oliveira (btco)](https://tic80.com/dev?id=339)      | Character / Tiles |
-| [STELE](https://tic80.com/play?cart=483)           | [Zus (captainzus)](https://tic80.com/dev?id=1185)          | Character / Tiles |
-| [PROJECT SLIDE](https://tic80.com/play?cart=4034)  | [LeaderJord](https://tic80.com/dev?id=10993)               | Code              |
+| Original                                           | Developer                                                  | Used Parts                  |
+|----------------------------------------------------|------------------------------------------------------------|-----------------------------|
+|                                                    | [Nesbox](https://tic80.com/dev?id=1)                       | Icon                        |
+| [8-BIT Panda](https://tic80.com/play?cart=188)     | [Bruno Oliveira (btco)](https://tic80.com/dev?id=339)      | Character / Tiles / Palette |
+| [STELE](https://tic80.com/play?cart=483)           | [Zus (captainzus)](https://tic80.com/dev?id=1185)          | Character / Tiles / Palette |
+| [PROJECT SLIDE](https://tic80.com/play?cart=4034)  | [LeaderJord](https://tic80.com/dev?id=10993)               | Code                        |
 
-<sub>*Sprite will shown in-game with another palette depending on map</sub>
+<sub>*Sprite will shown in-game with another palette depending on stage</sub>
 
 ## Licenses
 
