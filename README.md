@@ -39,7 +39,7 @@ Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
 | [STELE](https://tic80.com/play?cart=483)           | [Zus (captainzus)](https://tic80.com/dev?id=1185)          | Character / Tiles |
 | [PROJECT SLIDE](https://tic80.com/play?cart=4034)  | [LeaderJord](https://tic80.com/dev?id=10993)               | Code              |
 
-<small>*Sprite will shown in-game with another palette depending on map</small>
+<sub>*Sprite will shown in-game with another palette depending on map</sub>
 
 ## Licenses
 
