@@ -52,4 +52,4 @@ Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
 |------------------------------------------------|-------------------------------------------------------------------|
 | [8-BIT Panda](https://tic80.com/play?cart=188) | [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) |
 
-This repository is available under [MIT License](./README.md)
+This repository is available under [MIT License](./LICENSE)
