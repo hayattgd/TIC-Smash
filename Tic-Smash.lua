@@ -325,15 +325,15 @@ function CharacterBehaviour(id)
 	local touchingground = false
 	
 	player.pos.y = player.pos.y + player.velocity.y
-	local ychecktileidb = mget(mapid*30+(player.pos.x+4)//8, (player.pos.y+7)//8)
-	local ychecktileidbl = mget(mapid*30+(player.pos.x)//8, (player.pos.y+7)//8)
-	local ychecktileidbr = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y+7)//8)
+	local ychecktileidb = mget(mapid*30+(player.pos.x+4)//8, (player.pos.y+8)//8)
+	local ychecktileidbl = mget(mapid*30+(player.pos.x)//8, (player.pos.y+8)//8)
+	local ychecktileidbr = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y+8)//8)
 	local ychecktileidal = mget(mapid*30+(player.pos.x)//8, (player.pos.y)//8)
 	local ychecktileidar = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y)//8)
 	if fget(ychecktileidbl, 0) or fget(ychecktileidbr, 0) or fget(ychecktileidal, 0) or fget(ychecktileidar, 0) then
 		player.pos.y = player.pos.y - player.velocity.y
 		player.velocity.y = 0
-	elseif fget(ychecktileidb, 1) and player.velocity.y > 0 and player.pos.y < (player.pos.y+7)//8*8-6 and not player.button[2] then
+	elseif fget(ychecktileidb, 1) and player.velocity.y > 0 and player.pos.y < (player.pos.y+8)//8*8-6 and not player.button[2] then
 		touchingground = true
 		player.pos.y = player.pos.y - player.velocity.y
 		player.velocity.y = 0
@@ -430,7 +430,7 @@ function CharacterBehaviour(id)
 		player.button = {false, false, false, false, false, false, false, false}
 		player.buttonpress = {false, false, false, false, false, false, false, false}
 
-		--Aggressive
+		--Defensive
 		if (player.animuntil - 50 > frames or opponent.animuntil - 5 > frames and opponent.doublejumps < 2) and (opponent.pos.x > 90 and opponent.pos.x < 150) then
 			if player.pos.x < opponentvelpos.x then
 				player.button[3] = true
@@ -444,7 +444,7 @@ function CharacterBehaviour(id)
 			elseif player.npcv.jumped + 24 < frames then
 				player.buttonpress[1] = true
 			end
-		else
+		else --Aggresive
 			if player.pos.x > opponentvelpos.x then
 				player.button[3] = true
 			else
@@ -460,12 +460,12 @@ function CharacterBehaviour(id)
 		end
 
 		if Vector2.distance(player.pos, opponentvelpos) < 64 then
-			if player.animuntil + math.random(2,15) < frames then
+			if player.animuntil < frames then
 				player.buttonpress[5] = true
 			end
 		end
 		
-		--Defensive
+		--Prevent Falling
 		if player.pos.y > 60 then
 			player.button[2] = false
 		end
@@ -479,18 +479,19 @@ function CharacterBehaviour(id)
 			player.button[2] = true
 		end
 
-		if not (player.pos.x > 90 + player.hp * 0.2 and player.pos.x < 150 - player.hp * 0.2) then
-			if player.pos.x > 120 then
-				player.button[3] = true
-				player.button[4] = false
-			else
-				player.button[3] = false
-				player.button[4] = true
-			end
+		if (not (player.pos.x > 90 + player.hp * 0.2 and player.pos.x < 150 - player.hp * 0.2)) then
+			if not (player.doublejumps < 2) or math.abs(player.pos.x - 120) > 100 or opponent.pos.y < player.pos.y then
+				if player.pos.x > 120 then
+					player.button[3] = true
+					player.button[4] = false
+				else
+					player.button[3] = false
+					player.button[4] = true
+				end
 
-			if player.pos.y > 78 then
-				player.button[2] = false
-			end
+			player.buttonpress[2] = false
+			player.button[2] = false
+		end
 		end
 		
 		if player.pos.y > 78 and (player.pos.x > 60 and player.pos.x < 170) then
