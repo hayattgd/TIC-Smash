@@ -17,9 +17,9 @@ Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
 - [x] Non-player character
 - [x] Title
 - [x] Stage Select
-- [ ] Character Select
-- [ ] Timer / Score
-- [ ] Result
+- [x] Character Select
+- [x] Timer / Score
+- [x] Result
 
 ### Ideas / Plans to brush up (v1.0)
 

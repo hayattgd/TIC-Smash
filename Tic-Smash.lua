@@ -65,6 +65,8 @@ mappal={
 	},
 }
 
+timescale = 1
+
 mapname={
 	"Battlefield",
 	"Final Destination",
@@ -76,6 +78,11 @@ local bdrid = 0
 local scene = "INTRO"
 
 local camerapos
+
+local mousedown = false
+local previousmouse = {}
+
+local battlestarted = 0
 
 sfunc = {}
 
@@ -92,6 +99,12 @@ options = {
 title = {
 	cursor = 0,
 	state="Normal",
+	p1chara = 1,
+	p2chara = 1,
+	p1cp = 0,
+	p2cp = 3,
+	applypal = true,
+	ready = false,
 	menuitem = {
 		--Play
 		function()
@@ -156,7 +169,7 @@ function sfunc.new(f, duration, func, tbl, timing)
 end
 
 function Players.new(c, v, npc)
-	return {chara=c, pos=v, hp=0.0, hitstop=0, flip=0, velocity=Vector2.new(0, 0), doublejumps=0, frame=0, base = 0, attacks=0, animuntil=0, lastgrounded=0, jumped=-10, score=0, npcv={jumped=0}, npc=npc, sfunc={}, button={false, false, false, false, false, false}, buttonpress={false, false, false, false, false, false}}
+	return {chara=c, pos=v, hp=0.0, hitstop=0, flip=0, velocity=Vector2.new(0, 0), doublejumps=0, frame=0, base = 0, attacks=0, animuntil=0, lastgrounded=0, jumped=-10, score=0, reflect=0, invincible=0, npcv={jumped=0, grounded=false}, npc=npc, sfunc={}, button={false, false, false, false, false, false}, buttonpress={false, false, false, false, false, false}}
 end
 
 function Characters.new(n, col, acol, ck, sid, st, wgt, special, splength, charaAI, iconsprid, iconck)
@@ -251,32 +264,57 @@ function Init()
 
 	table.insert(Characters, Characters.new("8-BIT Panda", 13, 14, 0, 272, 7, 3,
 	function(player, opponent)
-	
-	end, 5,
+		player.invincible = 5
+		player.reflect = 2
+	end, 30,
 	
 	function (player, opponent)
-		
+		if posOnRect(opponent.pos.x + 4 + opponent.flip * -27, opponent.pos.y - 5, 27, 19, Vector2.new(player.pos.x + 4, player.pos.y + 4))
+		or posOnRect(opponent.pos.x - 5, opponent.pos.y - 5, 18, 24, Vector2.new(player.pos.x + 4, player.pos.y + 4)) and opponent.animuntil - 1 < frames then
+			return true
+		else
+			return false
+		end
 	end))
 
 	table.insert(Characters, Characters.new("STELE", 9, 5, 0, 280, 4, 7,
 	function(player, opponent)
-	
-	end, 5,
+		player.velocity = Vector2.normailze(player.velocity) * 2
+	end, 10,
 	
 	function (player, opponent)
-		
+		if (Vector2.distance(player.pos, opponent.pos) > 35 and Vector2.distance(player.pos, opponent.pos) < 40) or (player.npcv.jumped + 5 < frames and player.pos.y > 75) or (Vector2.normailze(player.velocity).y > 0.4 and player.pos.y < 0) then
+			return true
+		else
+			return false
+		end
+	end))
+
+	table.insert(Characters, Characters.new("Traveler", 14, 2, 0, 288, 6, 4,
+	function(player, opponent)
+		player.reflect = 5
+	end, 7,
+	
+	function (player, opponent)
+		if posOnRect(opponent.pos.x + 4 + opponent.flip * -27, opponent.pos.y - 5, 27, 19, Vector2.new(player.pos.x + 4, player.pos.y + 4))
+		or posOnRect(opponent.pos.x - 5, opponent.pos.y - 5, 18, 24, Vector2.new(player.pos.x + 4, player.pos.y + 4)) and opponent.animuntil - 1 < frames then
+			return true
+		else
+			return false
+		end
 	end))
 end
 
-function StartBattle(mid, pid1, pid2)
-	paltbl(mappal[mid+1])
+function StartBattle(mid, pid1, pid2, c1, c2)
 	poke(0x03FF8, 15)
+	music()
 	mapid = mid
+	battlestarted = frames
 
 	map(mapid*30, 0, 30, 17, 0, 0, 0, 1, remap)
-	
-	table.insert(Players, Players.new(pid1, P1spawn, true))
-	table.insert(Players, Players.new(pid2, P2spawn, true))
+
+	table.insert(Players, Players.new(pid1, P1spawn, c1))
+	table.insert(Players, Players.new(pid2, P2spawn, c2))
 
 	camerapos = Vector2.new(0, 0)
 	scene = "BATTLE"
@@ -286,7 +324,7 @@ function Smash(pos, vel, str, target)
 
 	local dist = target.pos - pos
 
-	local smashvel = Vector2.normailze(dist * 3 + vel * 1) * (math.abs(target.hp - Characters[target.chara].weight * 0.5) * 0.02 + 0.7) * (2 + str * 0.17)
+	local smashvel = Vector2.normailze(dist * 3 + vel * 1) * (math.abs(target.hp * Characters[target.chara].weight * 0.1) * 0.02 + 0.7) * (2 + str * 0.17)
 	smashvel.y = smashvel.y * 0.9
 
 	local magnitude = Vector2.magnitude(smashvel)
@@ -300,7 +338,7 @@ function Smash(pos, vel, str, target)
 end
 
 
-function CharacterBehaviour(id)
+function CharacterBehaviour(id, opponent)
 	local player = Players[id]
 	local chara = Characters[player.chara]
 	
@@ -312,45 +350,60 @@ function CharacterBehaviour(id)
 	----Tick
 	local shake = 0
 	if player.hitstop > 0 then
+		if player.reflect > 0 then
+			if not (opponent.reflect > 0) then
+				opponent.hitstop = player.hitstop
+			else
+				player.hitstop = player.hitstop * 1.25
+			end
+		end
+		if player.invincible > 0 then player.hitstop = 0 end
 		shake = math.clamp(player.hitstop, 0, 2)
-		player.hitstop = player.hitstop - 0.5
-		player.hp = player.hp + 0.5
+		player.hitstop = player.hitstop - 0.5 * timescale
+		player.hp = player.hp + 0.5 * timescale
 		sfx(9, math.floor(player.hp * 0.3), 20, 1)
 	else
 		player.hp = math.floor((player.hp + player.hitstop) * 10) * 0.1
 		player.hitstop = 0
 	end
 
+	if player.reflect > 0 then
+		player.reflect = player.reflect - 1
+	end
+	if player.invincible > 0 then
+		player.invincible = player.invincible - 1
+	end
+
 	--Physics
 	local touchingground = false
 	
-	player.pos.y = player.pos.y + player.velocity.y
+	player.pos.y = player.pos.y + player.velocity.y * timescale
 	local ychecktileidb = mget(mapid*30+(player.pos.x+4)//8, (player.pos.y+8)//8)
 	local ychecktileidbl = mget(mapid*30+(player.pos.x)//8, (player.pos.y+8)//8)
 	local ychecktileidbr = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y+8)//8)
 	local ychecktileidal = mget(mapid*30+(player.pos.x)//8, (player.pos.y)//8)
 	local ychecktileidar = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y)//8)
 	if fget(ychecktileidbl, 0) or fget(ychecktileidbr, 0) or fget(ychecktileidal, 0) or fget(ychecktileidar, 0) then
-		player.pos.y = player.pos.y - player.velocity.y
+		player.pos.y = player.pos.y - player.velocity.y * timescale
 		player.velocity.y = 0
 	elseif fget(ychecktileidb, 1) and player.velocity.y > 0 and player.pos.y < (player.pos.y+8)//8*8-6 and not player.button[2] then
 		touchingground = true
-		player.pos.y = player.pos.y - player.velocity.y
+		player.pos.y = player.pos.y - player.velocity.y * timescale
 		player.velocity.y = 0
 	end
 	
-	player.velocity.y = player.velocity.y + 0.09
+	player.velocity.y = player.velocity.y + 0.09 * timescale^2
 	
-	player.pos.x = player.pos.x + player.velocity.x
+	player.pos.x = player.pos.x + player.velocity.x * timescale
 	local lefttileida = mget(mapid*30+(player.pos.x)//8, (player.pos.y)//8)
 	local lefttileidb = mget(mapid*30+(player.pos.x)//8, (player.pos.y+7)//8)
 	local righttileida = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y)//8)
 	local righttileidb = mget(mapid*30+(player.pos.x+8)//8, (player.pos.y+7)//8)
 	if fget(lefttileida, 0) or fget(lefttileidb, 0) or fget(righttileida, 0) or fget(righttileidb, 0) then
-		player.pos.x = player.pos.x - player.velocity.x
+		player.pos.x = player.pos.x - player.velocity.x * timescale
 		player.velocity.x = 0
 	else
-		player.velocity.x = player.velocity.x / (chara.weight * 0.02 + 1.1)
+		player.velocity.x = player.velocity.x / ((chara.weight * 0.02 + 1.1) * timescale)
 	end
 	
 	local ychecktileidbb = mget(mapid*30+(player.pos.x+4)//8, (player.pos.y+9)//8)
@@ -374,7 +427,7 @@ function CharacterBehaviour(id)
 	
 	if math.abs(player.velocity.x) > 0.2 and frames > player.animuntil then
 		player.base = 1
-		player.frame = player.frame + player.velocity.x * 0.18
+		player.frame = player.frame + player.velocity.x * 0.18 / timescale
 		spriteid = sprid + player.base + math.floor(player.frame % 2)
 	elseif frames > player.animuntil then
 		player.base = 0
@@ -402,7 +455,7 @@ function CharacterBehaviour(id)
 	end
 
 	--Input handler
-	if not player.npc then
+	if player.npc == 0 then
 		player.button = {
 			btn(0 + (id-1)*8),
 			btn(1 + (id-1)*8),
@@ -425,13 +478,22 @@ function CharacterBehaviour(id)
 			btnp(7 + (id-1)*8)
 		}
 	else
-		local opponentvelpos = opponent.pos + opponent.velocity * 4
+		local opponentvelpos = opponent.pos + opponent.velocity * 4 * timescale
 		local dist = Vector2.distance(player.pos, opponentvelpos)
 		player.button = {false, false, false, false, false, false, false, false}
 		player.buttonpress = {false, false, false, false, false, false, false, false}
 
+		local insidehitbox = posOnRect(opponent.pos.x + 4 + opponent.flip * -27, opponent.pos.y - 5, 27, 19, Vector2.new(player.pos.x + 4, player.pos.y + 4))
+		or posOnRect(opponent.pos.x - 5, opponent.pos.y - 5, 18, 24, Vector2.new(player.pos.x + 4, player.pos.y + 4))
+
+		if player.npc < 4 then
+			insidehitbox = false
+		end
+
 		--Defensive
-		if (player.animuntil - 50 > frames or opponent.animuntil - 5 > frames and opponent.doublejumps < 2) and (opponent.pos.x > 90 and opponent.pos.x < 150) then
+		if (player.animuntil - 50 > frames or opponent.animuntil - 5 > frames and opponent.doublejumps < 2)
+		and (opponent.pos.x > 90 and opponent.pos.x < 150)
+		or insidehitbox then
 			if player.pos.x < opponentvelpos.x then
 				player.button[3] = true
 			else
@@ -444,7 +506,21 @@ function CharacterBehaviour(id)
 			elseif player.npcv.jumped + 24 < frames then
 				player.buttonpress[1] = true
 			end
+
+			if player.npc > 4 then
+				if posOnRect(opponent.pos.x + 4 + opponent.flip * -27, opponent.pos.y - 5, 27, 19, Vector2.new(player.pos.x + 4, player.pos.y + 4))
+				or posOnRect(opponent.pos.x - 5, opponent.pos.y - 5, 18, 24, Vector2.new(player.pos.x + 4, player.pos.y + 4))
+				and math.abs(player.velocity.x) < math.abs(opponent.velocity.x) then
+					player.buttonpress[1] = true
+				end
+			end
 		else --Aggresive
+			if player.npc > 3 then
+				if not opponent.npcv.grounded then
+					opponentvelpos.y = opponentvelpos.y - 12
+				end
+			end
+			
 			if player.pos.x > opponentvelpos.x then
 				player.button[3] = true
 			else
@@ -459,9 +535,27 @@ function CharacterBehaviour(id)
 			end
 		end
 
+		local atkdist = 64
+		if player.npc < 3 then
+			atkdist = 16
+		elseif player.npc < 4 then
+			atkdist = 32
+		end
 		if Vector2.distance(player.pos, opponentvelpos) < 64 then
 			if player.animuntil < frames then
-				player.buttonpress[5] = true
+				if player.npc > 4 then
+					if grounded then
+						if posOnRect(player.pos.x + 4 + player.flip * -27, player.pos.y - 5, 27, 19, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
+							player.buttonpress[5] = true
+						end
+					else
+						if posOnRect(player.pos.x - 5, player.pos.y - 5, 18, 24, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
+							player.buttonpress[5] = true
+						end
+					end
+				else
+					player.buttonpress[5] = true
+				end
 			end
 		end
 		
@@ -480,7 +574,7 @@ function CharacterBehaviour(id)
 		end
 
 		if (not (player.pos.x > 90 + player.hp * 0.2 and player.pos.x < 150 - player.hp * 0.2)) then
-			if not (player.doublejumps < 2) or math.abs(player.pos.x - 120) > 100 or opponent.pos.y < player.pos.y then
+			if (not (player.doublejumps < 2)) or math.abs(player.pos.x - 120) > 100 or opponent.pos.y < player.pos.y or player.npc < 4 then
 				if player.pos.x > 120 then
 					player.button[3] = true
 					player.button[4] = false
@@ -504,6 +598,17 @@ function CharacterBehaviour(id)
 			end
 		end
 
+		--Limit attack speed
+		if player.npc == 6 then attackspeed = 0 end
+		if player.npc == 5 then attackspeed = math.random(1, 8) end
+		if player.npc == 4 then attackspeed = math.random(2, 12) end
+		if player.npc == 3 then attackspeed = math.random(5, 15) end
+		if player.npc == 2 then attackspeed = math.random(8, 18) end
+		if player.npc == 1 then attackspeed = math.random(12, 26) end
+		if player.animuntil + attackspeed > frames then
+			player.buttonpress[5] = false
+		end
+
 		player.buttonpress[6] = chara.charaAI(player, opponent)
 		if player.buttonpress[6] then player.button[5] = false player.buttonpress[5] = false end
 	end
@@ -511,13 +616,13 @@ function CharacterBehaviour(id)
 	----Control
 	if player.hitstop == 0 then
 		--Move
-		if player.button[3] then player.velocity.x = player.velocity.x - 0.25 player.flip = 1 end
-		if player.button[4] then player.velocity.x = player.velocity.x + 0.25 player.flip = 0 end
+		if player.button[3] then player.velocity.x = player.velocity.x - 0.25 * timescale player.flip = 1 end
+		if player.button[4] then player.velocity.x = player.velocity.x + 0.25 * timescale player.flip = 0 end
 		
 		if player.buttonpress[1] then
 			if player.doublejumps < 2 then
 				player.npcv.jumped = frames
-				player.jumped = frames + 30
+				player.jumped = frames + 30 / timescale
 				sfx(7)
 				if player.doublejumps ~= 0 then
 					table.insert(Particles, Particles.new(1, player.pos + Vector2.new(4, 8)))
@@ -525,15 +630,15 @@ function CharacterBehaviour(id)
 					table.insert(Particles, Particles.new(2, player.pos + Vector2.new(4, 8)))
 				end
 				player.doublejumps = player.doublejumps + 1
-				player.velocity.y = -3 / (chara.weight * 0.05 + 1)
+				player.velocity.y = -3 * timescale / (chara.weight * 0.05 + 1)
 			end
 		end
 		
 		if player.button[2] then
 			if player.jumped < frames then
 				player.lastgrounded = -100
-				if player.velocity.y < 0 and player.velocity.y > -5 then player.velocity.y = 0.4
-				else player.velocity.y = player.velocity.y + 0.15 end
+				if player.velocity.y < 0 and player.velocity.y > -5 * timescale then player.velocity.y = 0.4 * timescale
+				else player.velocity.y = player.velocity.y + 0.15 * timescale end
 			end
 		end
 		
@@ -552,7 +657,7 @@ function CharacterBehaviour(id)
 				
 				spriteid = sprid + player.base
 				if posOnRect(player.pos.x + 4 + player.flip * -27, player.pos.y - 5, 27, 19, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
-					opponent.hitstop = opponent.hitstop + chara.str * 0.2
+					opponent.hitstop = opponent.hitstop + chara.str * 0.12
 					Smash(player.pos, player.velocity, chara.str, opponent)
 				else
 					sfx(8, 0, 20, 1)
@@ -565,7 +670,7 @@ function CharacterBehaviour(id)
 				spriteid = sprid + player.base
 
 				if posOnRect(player.pos.x - 5, player.pos.y - 5, 18, 24, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
-					opponent.hitstop = opponent.hitstop + chara.str * 0.1 + math.clamp(math.floor(player.velocity.y * 7) * 0.1, chara.str * 0.1, chara.str * 3)
+					opponent.hitstop = opponent.hitstop + chara.str * 0.015 + math.clamp(math.floor(player.velocity.y * 7) * 0.1, chara.str * 0.07, chara.str * 2.5)
 					Smash(player.pos, player.velocity, chara.str, opponent)
 				else
 					sfx(8)
@@ -583,14 +688,15 @@ function CharacterBehaviour(id)
 	end
 	
 	----Render
+	print(id.."P", player.pos.x - camerapos.x + 1, player.pos.y - camerapos.y - 5, 13, false, 1, true)
 	spr(spriteid, player.pos.x - camerapos.x, player.pos.y - camerapos.y, player.colorkey, 1, player.flip, 0, 1, 1)
 	
 	--UI
 	local UIx = 30
 	if id == 2 then UIx = 120 end
 	
-	trec(UIx + 19,118,46,12,0,223,1,1,-1,0)
-	trec(UIx + 19,117,46,12,chara.altcolor,223,1,1,-1,0)
+	rect(UIx + 19,118,46,12,0)
+	rect(UIx + 19,118,46,12,chara.altcolor)
 	trec(UIx + 10,111,16,16,0,223,1,1,-1,24)
 	trec(UIx + 10,110,16,16,chara.color,223,1,1,-1,24)
 	if chara.iconid then
@@ -856,11 +962,21 @@ function TIC()
 			if TextButton("OPTIONS", 59, 91, true, 12, 14) then title.menuitem[2]() end
 			if TextButton("EXIT", 59, 101, true, 12, 14) then title.menuitem[3]() end
 		elseif title.state == "StageSelect" then
+			if btnp(5) then
+				title.state = "Normal"
+			end
+			
+			if btnp(6) then
+				title.applypal = not title.applypal
+			end
+
 			cls(0)
+			ButtonSpr("X", 4, 2)
+			print("  /A key to use default palette", 4, 2, 12)
 			for i = 1, 6, 1 do
 				local framecolor = 14
 				
-				local pos = Vector2.new((i-1)*38+10, 6)
+				local pos = Vector2.new((i-1)*38+11, 8)
 
 				local touchingcursor = mouseOnRect(pos.x, pos.y, 32, 19)
 				if touchingcursor then
@@ -869,11 +985,16 @@ function TIC()
 				end
 
 				if title.cursor == i then
-					paltbl(mappal[i])
+					if title.applypal then
+						paltbl(mappal[i])
+					else
+						paltbl(mappal[1])
+					end
+
 					framecolor = 12
-					rect(9, 26, 224, 104, mapbg[i])
-					map((i-1) * 30 % 240 + 1, (i-1) // 8 * 17 + 2, 28, 13, 9, 26, 0, 1, remap)
-					rectb(9, 26, 224, 104, 14)
+					rect(9, 29, 224, 104, mapbg[i])
+					map((i-1) * 30 % 240 + 1, (i-1) // 8 * 17 + 2, 29, 13, 9, 28, 0, 1, remap)
+					rectb(9, 29, 224, 104, 14)
 					local _, _, click = mouse()
 					if touchingcursor and click or btnp(4) then
 						mapid = i-1
@@ -896,13 +1017,28 @@ function TIC()
 			title.cursor = math.clamp(title.cursor, 1, 6)
 		elseif title.state == "CharaSelect" then
 			cls(15)
+			if btnp(5) then
+				if title.ready then
+					title.ready = false
+				else
+					title.state = "StageSelect"
+				end
+			end
 
 			if btnp(2) then
-				title.cursor = title.cursor - 1
+				title.p1chara = title.p1chara - 1
 			end
 
 			if btnp(3) then
-				title.cursor = title.cursor + 1
+				title.p1chara = title.p1chara + 1
+			end
+			
+			if btnp(10) then
+				title.p2chara = title.p2chara - 1
+			end
+
+			if btnp(11) then
+				title.p2chara = title.p2chara + 1
 			end
 
 			for idx, value in ipairs(Characters) do
@@ -915,7 +1051,7 @@ function TIC()
 				end
 
 				if Button(pos.x, pos.y, 20, 20) then
-					title.cursor = idx
+					title.p1chara = idx
 				end
 
 				rect(pos.x, pos.y, 20, 20, color)
@@ -927,34 +1063,174 @@ function TIC()
 				end
 
 				local outlinecolor = 0
-				if title.cursor == idx then
-					outlinecolor = altcolor
+				if title.p1chara == idx then
+					outlinecolor = 11
+
+					rect(32, 64, 66, 66, color)
+					rectb(32, 64, 66, 66, altcolor)
+					if value.iconid then
+						spr(value.iconid, 33, 65, value.iconcolorkey, 4, 0, 0, 2, 2)
+					else
+						spr(value.sprid, 33, 65, value.colorkey, 8, 0, 0, 1, 1)
+					end
+
+					rect(35, 67, 22, 8, 15)
+					if Button(35, 67, 22, 8) then
+						title.p1cp = title.p1cp + 1
+						if title.p1cp > 6 then
+							title.p1cp = 0
+						end
+					end
+
+					if title.p1cp > 0 then
+						print("LV"..title.p1cp, 38, 68, 12)
+					else
+						print("1P", 38, 68, 11)
+					end
+					rectb(35, 67, 22, 8, 13)
+				end
+				if title.p2chara == idx then
+					if outlinecolor ~= 0 then
+						outlinecolor = 12
+					else
+						outlinecolor = 3
+					end
+
+					rect(141, 64, 66, 66, color)
+					rectb(141, 64, 66, 66, altcolor)
+					if value.iconid then
+						spr(value.iconid, 142, 65, value.iconcolorkey, 4, 0, 0, 2, 2)
+					else
+						spr(value.sprid, 142, 65, value.colorkey, 8, 0, 0, 1, 1)
+					end
+
+					rect(144, 67, 22, 8, 15)
+					if Button(144, 67, 22, 8) then
+						title.p2cp = title.p2cp + 1
+						if title.p2cp > 6 then
+							title.p2cp = 0
+						end
+					end
+
+					if title.p2cp > 0 then
+						print("LV"..title.p2cp, 146, 68, 12)
+					else
+						print("2P", 146, 68, 3)
+					end
+					rectb(144, 67, 22, 8, 13)
 				end
 
 				rectb(pos.x, pos.y, 20, 20, outlinecolor)
+				
+			end
+
+			--READY? moment
+			if title.ready then
+				rect(0, 52, 239, 32, 3)
+				rect(0, 54, 239, 28, 4)
+				rect(0, 56, 239, 24, 0)
+				centerprint("READY FOR BATTLE?", 120, 65, 12)
+				if btnp(4) then
+					title.ready = false
+					StartBattle(mapid, title.p1chara, title.p2chara, title.p1cp, title.p2cp)
+				end
+			end
+			
+			if btnp(4) then
+				title.ready = true
 			end
 		end
 	elseif scene == "BATTLE" then
+		local sec = 150 - (frames - battlestarted) // 60
+
+		if sec > 0 then
+			cls(mapbg[mapid+1])
+			local destination = (Players[1].pos + Players[2].pos) * 0.5 - Vector2.new(112, 60)
+			camerapos = Vector2.lerp(camerapos, destination, 0.05)
+			camerapos = Vector2.new(math.clamp(camerapos.x, -52, 52), math.clamp(camerapos.y, -72, 48))
+			ProcessScheduledFunc(1, Players[1].sfunc)
+			ProcessScheduledFunc(1, Players[2].sfunc)
+
+			map(mapid*30, 0, 30, 17, -camerapos.x, -camerapos.y, 0, 1, remap)
+			
+			local p1 = Players[1]
+			CharacterBehaviour(1, Players[2])
+			CharacterBehaviour(2, p1)
+
+			ProcessScheduledFunc(0, Players[1].sfunc)
+			ProcessScheduledFunc(0, Players[2].sfunc)
+			
+			RenderParticle()
+
+			print(tostring(sec // 60)..":"..string.format("%02d", sec % 60), 2, 2, 14, true, 1, true)
+		else
+			scene = "RESULT"
+		end
+	elseif scene == "RESULT" then
 		cls(mapbg[mapid+1])
-		local destination = (Players[1].pos + Players[2].pos) * 0.5 - Vector2.new(112, 60)
-		camerapos = Vector2.lerp(camerapos, destination, 0.05)
-		camerapos = Vector2.new(math.clamp(camerapos.x, -52, 52), math.clamp(camerapos.y, -72, 48))
-		ProcessScheduledFunc(1, Players[1].sfunc)
-		ProcessScheduledFunc(1, Players[2].sfunc)
-
 		map(mapid*30, 0, 30, 17, -camerapos.x, -camerapos.y, 0, 1, remap)
-		
-		CharacterBehaviour(1)
-		CharacterBehaviour(2)
 
-		ProcessScheduledFunc(0, Players[1].sfunc)
-		ProcessScheduledFunc(0, Players[2].sfunc)
-		
-		RenderParticle()
+		function RenderResult(id)
+			local player = Players[id]
+			local chara = Characters[player.chara]
+			local UIx = 30
+			if id == 2 then UIx = 120 end
+			
+			rect(UIx + 19,118,46,12,0)
+			rect(UIx + 19,118,46,12,chara.altcolor)
+			trec(UIx + 10,111,16,16,0,223,1,1,-1,24)
+			trec(UIx + 10,110,16,16,chara.color,223,1,1,-1,24)
+			if chara.iconid then
+				trec(UIx + 10,109,16,16,chara.iconid%16*8,chara.iconid//16*8,16,16,chara.iconcolorkey,0)
+			else
+				trec(UIx + 10,109,16,16,chara.sprid%16*8,chara.sprid//16*8,8,8,0,0)
+			end
+			print(chara.name, UIx + 26, 127, 0)
+			print(chara.name, UIx + 26, 126, chara.color)
+			print(player.score, UIx + 58, 115, 0, false, 1, true)
+			print(player.score, UIx + 59, 114, 12, false, 1, true)
+			
+			local hpcolor = 12
+			if player.hp > 200 then
+				hpcolor = 2
+			elseif player.hp > 100 then
+				hpcolor = 3
+			elseif player.hp > 50 then
+				hpcolor = 4
+			end
+			
+			print(player.hp.."%", UIx + 28, 121, 0)
+			print(player.hp.."%", UIx + 28, 120, hpcolor)
+		end
+
+		RenderResult(1)
+		RenderResult(2)
+
+		centerprint("Press A to continue", 119, 69, 15)
+		centerprint("Press A to continue", 120, 68, 12)
+
+		if btnp(4) then
+			scene = "TITLE"
+			title.state = "Normal"
+			paltbl(mappal[1])
+
+			table.remove(Players, 1)
+			table.remove(Players, 2)
+
+			music(0)
+		end
 	end
 
 	rectb(0, 0, 240, 136, 13)
 	
+	if previousmouse then
+		mousedown = false
+	else
+		local _, _, left = mouse()
+		mousedown = left
+	end
+	_, _, previousmouse = mouse()
+
 	frames = frames + 1
 end
 
@@ -1008,10 +1284,9 @@ function trec(x, y, w1, h1, u, v, w2, h2, t, angle)
 end
 
 function Button(x, y, w, h)
-	local _, _, left = mouse()
 	if mouseOnRect(x, y, w, h) then
 		poke(0x3FFB, 129)
-		if left then
+		if mousedown then
 			return true
 		end
 	end
@@ -1030,6 +1305,11 @@ function TextButton(txt, x, y, shadow, color, shadowcolor)
 	local width = print(txt, x, y, color)
 	
 	return Button(x, y, width, 6)
+end
+
+function centerprint(text, x, y, color)
+	local width = print(text)
+	print(text, x - width * 0.5, y, color)
 end
 
 function posOnRect(x, y, w, h, pos, dbg)
@@ -1054,6 +1334,12 @@ function paltbl(tbl)
 	for i = 1, 16, 1 do
 		pal(i-1, tbl[i][1], tbl[i][2], tbl[i][3])
 	end
+end
+
+function ButtonSpr(name, x, y)
+	elli(x+3, y+3, 3.5, 3, 15)
+	elli(x+3, y+2, 3.5, 3, 14)
+	print(name, x+2, y, 12, true, 1, true)
 end
 
 --Code snippets from https://github.com/nesbox/TIC-80/wiki/code-examples-and-snippets
@@ -1198,8 +1484,8 @@ end
 -- 037:00ddd00000dfff0000fff0000022200002ddff0002dff2d000202dcd00d0d0dd
 -- 038:0011100000122200001110000022200002111000021110000020200000101000
 -- 039:0011100000122200001110000022200002111000021110000020200000101000
--- 176:0000000000000000000000000000000000000000000000000000000001234567
--- 177:0000000000000000000000000000000000000000000000000000000089abcdef
+-- 176:0123456701234567012345670123456701234567012345670123456701234567
+-- 177:89abcdef89abcdef89abcdef89abcdef89abcdef89abcdef89abcdef89abcdef
 -- 178:aaaaaaa8aaaaaa88aa999988aa999988aa999988aa999988a888888888888888
 -- 179:cccccccecccccceeccddddeeccddddeeccddddeeccddddeeceeeeeeeeeeeeeee
 -- 180:4444444244444422443333224433332244333322443333224222222222222222
@@ -1267,26 +1553,27 @@ end
 -- 001:0123456789abcdeffedcba9876543210
 -- 002:0123456789abcdef0123456789abcdef
 -- 003:0123456789a987654321012345543210
--- 005:01355310fecaacef01355310fecaacef
+-- 005:00000000ffffffff0123456789abcdef
+-- 006:02468aceeca864200123432101233210
 -- </WAVES>
 
 -- <SFX>
--- 000:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000307000000000
--- 001:04f774f7d4f7f4f7f400f400f400f400f400040004000400040004000400040004000400040004000400040004000400040004000400040004000400800000310000
+-- 000:060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600309000000000
+-- 001:04f771f7d1f7f1f7f100f100f100f400f400040004000400040004000400040004000400040004000400040004000400040004000400040004000400800000310000
 -- 002:04f50400040014002400340064007400a400b400d400d400e400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400880000f10101
--- 003:04067400d400f400f400f400f400f4000400040004000400040004000400040004000400040004000400040004000400040004000400040004000400800000310101
+-- 003:04f741007100a100d400e400f400f4000400040004000400040004000400040004000400040004000400040004000400040004000400040004000400880011610101
 -- 004:040804001400140024002400340034004400440054005400640074007400840084009400a400a400b400c400e400f400f400f400f400f400f400f400850000000101
 -- 005:04f834f794f7f4f7f400f400f400f400f400040004000400040004000400040004000400040004000400040004000400040004000400040004000400800000310101
--- 006:01000100010031007100710061004100410071009100a10081009100b100c100d100d100d100c100a100a100a100a100a100b100d100e100e100c100414000ff0000
--- 007:45789590c5d0f5d005000500050005000500050005000500050005000500050005000500050005000500050005000500050005000500050005000500b09000310001
+-- 006:03000300030031007100760066004600460076009600a60086009600b600c600d600d600d600c600a600a600a600a600a600b600d600e600e600c600414000ff0000
+-- 007:40789290c2d0f2d002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200b09000310001
 -- 008:c40864f7a4f7f4f7f400f400f400f400f400040004000400040004000400040004000400040004000400040004000400040004000400040004000400800000310101
 -- 009:04f50400140054009400e400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400880000610101
--- 010:0000000000000000300060008000a000b000d000e000e000f000f000f000f00000000000000000000000000000000000000000000000000000000000400000f10000
+-- 010:060006000600060036006600860096009600a600b600c600c600d600e600f60006000600060006000600060006000600060006000600060006000600400000f10000
 -- 011:04080409040a041a041b041b042c142c142c143d244d244d345d445d446d546d647d747e848e948ea49eb49eb4aec4bec4bfd4cfd4dfe4e0e4f0f4f0870000000000
 -- </SFX>
 
 -- <PATTERNS>
--- 000:40f11000000043f13a00000046f11e0000004af13a0000004df1100000004ff13a00000040001e00000040003a00000040001000000040001a00000040003e00000040001a00000040001000000040003a00000040001e00000040001a00000040001000000040003a00000040001e00000040001a00000040001000000040003a00000040001e00000040001a00000040001000000040003a00000040001e00000040001a00000040001000000040003a00000040001e00000040001a000000
+-- 000:40f11000000043f13600000046f11e0000004af1360000004df1100000004ff13600000040001e00000040003600000040001000000040001600000040003e00000040001600000040001000000040003600000040001e00000040001600000040001000000040003600000040001e00000040001600000040001000000040003600000040001e00000040001600000040001000000040003600000040001e00000040001600000040001000000040003600000040001e000000400016000000
 -- 001:fff14e000000000000000000000050000000000050000000000000000000000000000000000000000000000000000000500068000000000000000000f00066000000d00066000000c00066000000000000000000000000000000c00066000000000000000000000000000000c00066000000000000000000000000000000c00066000000000000000000000000000000a00066000000c00066000000d00066000000f00066000060c00066000000000000000000000000000000c00066010300
 -- 002:000000000000000000000000c00066000000000000000000000000000000c00066000000000060000000000060000000a00066000000c00066000000d00066000000f00066000000500068000000000000000000000000000000500068000000000000000000000060000000500068000000000000000000000060000000500068000000000000000000000000004300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- 003:f0004e000000000000000000000000000000f4f14e000000000000000000000000000000f1f14e0000000000000000000000000000000000000000000000000000000000000000004ff134000000000000000000f00014000000000000000000400034000000000000000000f00014000000000000000000400034000000000000000000f00014000000000000000000400034000000000000000000f00014000000000000000000400034000000000000000000f00014000000000000000000
