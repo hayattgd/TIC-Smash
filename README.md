@@ -42,9 +42,9 @@ Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
 |                                                    | [Nesbox](https://tic80.com/dev?id=1)                       | Icon                        |
 | [8-BIT Panda](https://tic80.com/play?cart=188)     | [Bruno Oliveira (btco)](https://tic80.com/dev?id=339)      | Character / Tiles / Palette |
 | [STELE](https://tic80.com/play?cart=483)           | [Zus (captainzus)](https://tic80.com/dev?id=1185)          | Character / Tiles / Palette |
-| [PROJECT SLIDE](https://tic80.com/play?cart=4034)  | [LeaderJord](https://tic80.com/dev?id=10993)               | Code                        |
+| [Balmung](https://tic80.com/play?cart=636)         | [petet](https://tic80.com/dev?id=1720)                     | Character / Tiles / Palette |
 
-<sub>*Sprite will shown in-game with another palette depending on stage</sub>
+<sub>*Some Sprites / Tiles will shown in-game with another palette depending on situation</sub>
 
 ## Licenses
 
