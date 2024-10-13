@@ -1041,6 +1041,9 @@ function TIC()
 				title.p2chara = title.p2chara + 1
 			end
 
+			title.p2chara = math.clamp(title.p2chara, 1, #Characters)
+			title.p1chara = math.clamp(title.p1chara, 1, #Characters)
+
 			for idx, value in ipairs(Characters) do
 				local pos = Vector2.new((idx-1)*22+24, idx//9*22+16)
 				local color = value.color
