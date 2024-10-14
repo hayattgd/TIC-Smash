@@ -27,6 +27,12 @@ Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
 - [x] More stages
 - [ ] More characters (around 12)
 - [x] Another special attack
+- [ ] Story thing (PvE)
+- [ ] Custom character
+- [ ] Custom stage
+- [ ] 4 player battle
+- [ ] ~~More ways to attack~~
+- [ ] ~~Boss fight~~
 - [ ] ~~Item~~
 - [ ] ~~Assist Figure~~
 - [ ] ~~Final smash~~
