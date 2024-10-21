@@ -78,7 +78,7 @@ Or, simply make new issue about bugs or suggestions. Sharing TIC-Smash to friend
 
 each versions saved as .tic format in [Version](./Version) folder
 
-### v0.1
+### [v0.1](https://github.com/hayattgd/TIC-Smash/commit/b37b35128759e81abe977a724e7df8f2d099fb76)
 
 **First release!**
 
@@ -88,7 +88,7 @@ each versions saved as .tic format in [Version](./Version) folder
 - some effects / sfx on jumping / smashing
 - every character has same special
 
-### v0.4
+### [v0.4](https://github.com/hayattgd/TIC-Smash/commit/0e18cdd7584aa21f99e0b26012ef73dbd715bbd7)
 
 **more stage / character!**
 
@@ -97,7 +97,7 @@ each versions saved as .tic format in [Version](./Version) folder
 - each character has own special (wip)
 - stage and character is shuffled in each play
 
-### v0.8
+### [v0.8](https://github.com/hayattgd/TIC-Smash/commit/9aa126f69df2ed529c36fb8fca0ba8f5ba85d4eb)
 
 **huge update!**
 
@@ -108,6 +108,18 @@ each versions saved as .tic format in [Version](./Version) folder
 - added 1~6 level for bot
 - added timer / result on battle (wip)
 - can choose character is controlled by bot or player
+
+### [v0.81](https://github.com/hayattgd/TIC-Smash/commits/0.81)
+
+**qol + characters**
+
+- more than 6 stages can be added now
+- more character
+- character palette wont depends on stage (32 color palette!)
+- optimized code size
+- character name goes small when its too big
+
+<sub>Using github's tag for release from now</sub>
 
 ## Credits
 
@@ -123,6 +135,7 @@ each versions saved as .tic format in [Version](./Version) folder
 | Original MARIO BROS.                                        | Nintendo                                                   |                             |
 | [Super Meat Boy (Demake)](https://tic80.com/play?cart=1512) | [nequ16 (Never)](https://tic80.com/dev?id=2178)            | Character / Tiles / Palette |
 | Original Super Meat Boy                                     | Team Meat                                                  |                             |
+| [SUPERNOVA](https://tic80.com/play?cart=645)                | [Sintel](https://tic80.com/dev?id=1845)                    | Stage / Palette             |
 | Among us                                                    | Innersloth                                                 | Character                   |
 
 <sub>*Some Sprites / Tiles will shown in-game with another palette depending on situation</sub>
