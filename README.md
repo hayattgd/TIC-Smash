@@ -42,6 +42,8 @@ git clone https://github.com/hayattgd/TIC-Smash.git
 cd TIC-Smash
 ```
 
+if you didnt installed TIC-80 then, install it from [github](https://github.com/nesbox/TIC-80/releases/) or [itch.io](https://nesbox.itch.io/tic80)
+
 And, its recommend to set variable %TIC80% to path to your TIC-80 executable.
 
 ### .TIC
@@ -98,7 +100,7 @@ Or, simply make new issue about bugs or suggestions. Sharing TIC-Smash to friend
 
 ## Changelog
 
-each versions saved as .tic format in [Version](./Version) folder
+each versions saved as .tic format in [Version](./Version) folder or in [Releases](https://github.com/hayattgd/TIC-Smash/releases) as source code.
 
 ### [v0.1](https://github.com/hayattgd/TIC-Smash/commit/b37b35128759e81abe977a724e7df8f2d099fb76)
 
