@@ -1,5 +1,27 @@
 # TIC-Smash
 
+- [TIC-Smash](#tic-smash)
+  - [About](#about)
+  - [Screenshots](#screenshots)
+  - [Build](#build)
+    - [.TIC](#tic)
+    - [Windows](#windows)
+  - [Contributing](#contributing)
+  - [To-do](#to-do)
+    - [Planned (v0.8)](#planned-v08)
+    - [Ideas / Plans to brush up (v1.0)](#ideas--plans-to-brush-up-v10)
+  - [Changelog](#changelog)
+    - [v0.1](#v01)
+    - [v0.4](#v04)
+    - [v0.8](#v08)
+    - [v0.81](#v081)
+  - [Credits](#credits)
+    - [Used stuffs](#used-stuffs)
+    - [Inspired by](#inspired-by)
+  - [Licenses](#licenses)
+
+## About
+
 a fighting game inspired by [Super Smash Bros.](https://www.smashbros.com/) available and made with [TIC-80](https://tic80.com).
 
 Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
