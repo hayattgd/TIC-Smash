@@ -1,13 +1,48 @@
 # TIC-Smash
 
-a fighting game available and made with [TIC-80](https://tic80.com).
+a fighting game inspired by [Super Smash Bros.](https://www.smashbros.com/) available and made with [TIC-80](https://tic80.com).
 
 Game is playable at [TIC-80 website](https://tic80.com/play?cart=4036)
+
+**[Super Smash Bros.](https://www.smashbros.com/) by Nintendo**
 
 ## Screenshots
 
 <img src="./Images/8-BIT_Panda_STELE.png" style="width:512px">
 <img src="./Images/STELE_Nesbox_hayattgd.png" style="width:512px">
+
+## Build
+
+First, you need to clone and go into TIC-Smash directory.
+
+```sh
+git clone https://github.com/hayattgd/TIC-Smash.git
+cd TIC-Smash
+```
+
+And, its recommend to set variable %TIC80% to path to your TIC-80 executable.
+
+### .TIC
+
+```sh
+%TIC80% --cli --fs=./ --cmd="load TIC-Smash.lua & cd Version & save LATEST.tic & exit"
+rm .local
+```
+
+### Windows
+
+```sh
+%TIC80% --cli --fs=./ --cmd="load TIC-Smash.lua & export win LATEST alone=1 & exit"
+rm .local
+```
+
+## Contributing
+
+To contribute development of TIC-Smash, fork this repository and edit it, then make a pull request.
+
+Or, simply make new issue about bugs or suggestions. Sharing TIC-Smash to friends is also good :)
+
+<sub>downloading [TIC-80 syntax](https://github.com/hayattgd/TIC-80-syntax) is recommend when development</sub>
 
 ## To-do
 
@@ -76,7 +111,7 @@ each versions saved as .tic format in [Version](./Version) folder
 
 ## Credits
 
-**[Super Smash Bros.](https://www.smashbros.com/) by Nintendo**
+### Used stuffs
 
 | Original                                                    | Developer                                                  | Used Parts                  |
 |-------------------------------------------------------------|------------------------------------------------------------|-----------------------------|
@@ -86,8 +121,18 @@ each versions saved as .tic format in [Version](./Version) folder
 | [Balmung](https://tic80.com/play?cart=636)                  | [petet](https://tic80.com/dev?id=1720)                     | Character / Tiles / Palette |
 | [MARIO BROS. (Demake)](https://tic80.com/play?cart=223)     | [trelemar](https://tic80.com/dev?id=5)                     | Tiles / Palette             |
 | Original MARIO BROS.                                        | Nintendo                                                   |                             |
+| [Super Meat Boy (Demake)](https://tic80.com/play?cart=1512) | [nequ16 (Never)](https://tic80.com/dev?id=2178)            | Character / Tiles / Palette |
+| Original Super Meat Boy                                     | Team Meat                                                  |                             |
+| Among us                                                    | Innersloth                                                 | Character                   |
 
 <sub>*Some Sprites / Tiles will shown in-game with another palette depending on situation</sub>
+
+### Inspired by
+
+| Original                                                    | Developer                                                  | Inspired Parts              |
+|-------------------------------------------------------------|------------------------------------------------------------|-----------------------------|
+| [TICHOU (Demake)](https://tic80.com/play?cart=4007)         | [SineLuciditate](https://tic80.com/dev?id=10773)           | Character                   |
+| Original Touhou                                             | ZUN                                                        |                             |
 
 ## Licenses
 
