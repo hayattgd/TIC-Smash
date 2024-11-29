@@ -10,12 +10,14 @@
 --CREDITS:
 --https://github.com/hayattgd/TIC-Smash#credits
 
---im updating this :)
+--i wasnt worked in this for while
 
+----VARIABLES----
 local GAME_VER = "v0.81"
 
 local frames = 0
 
+--Map variables--
 local mapid = 0
 
 tilecolor = {
@@ -74,8 +76,6 @@ mappal={
 	},
 }
 
-timescale = 1
-
 mapname={
 	"Battlefield",
 	"Final Destination",
@@ -98,7 +98,10 @@ mapgame={
 	"SUPER NOVA"
 }
 
+--System stuff--
+
 local scene = "INTRO"
+timescale = 1
 
 local camerapos
 
@@ -119,6 +122,10 @@ options = {
 	{ name="FPS", value=false }
 }
 
+local P1spawn = Vector2.new(0, 0)
+local P2spawn = Vector2.new(0, 0)
+
+--Table that holds every variables of title
 title_i = {
 	cursor = 0,
 	stageselect={
@@ -155,6 +162,8 @@ title_i = {
 
 title = {}
 
+----Functions----
+--Vector2 Functions--
 function Vector2.new(x, y)
 	return setmetatable({x=x, y=y}, Vector2)
 end
@@ -190,9 +199,7 @@ function Vector2:__mul(n)
 	return Vector2.new(self.x * n, self.y * n)
 end
 
-local P1spawn = Vector2.new(0, 0)
-local P2spawn = Vector2.new(0, 0)
-
+--.new()--
 function sfunc.new(f, duration, func, tbl, timing)
 	tbl = tbl or {}
 	timing = timing or 0
@@ -212,6 +219,7 @@ function Particles.new(id, pos, tbl)
 	return {id=id, pos=pos, spawned=frames, tbl=tbl}
 end
 
+--remove and set P1 and P2 tile
 function remap(tile,x,y)
 	local oTile, flip, rotate = tile, 0, 0
 	
