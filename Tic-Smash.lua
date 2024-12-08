@@ -1,4 +1,3 @@
----@diagnostic disable: param-type-mismatch
 -- title:   TIC-Smash
 -- author:  hayattgd
 -- desc:    a game inspired by Smash Bros.
@@ -40,38 +39,15 @@ tilecolor = {
 mapbg={ 0, 8, 8, 0, 0, 0, 0, 0 }
 
 mappal={
-	{
-		{0x1A, 0x1C, 0x2C},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0xEF, 0x7D, 0x57},{0xFF, 0xCD, 0x75},{0xA7, 0xF0, 0x70},{0x38, 0xB7, 0x64},{0x25, 0x71, 0x79},
-		{0x29, 0x36, 0x6F},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xF4, 0xF4, 0xF4},{0x94, 0xB0, 0xC2},{0x56, 0x6C, 0x86},{0x33, 0x3C, 0x57}
-	},
-	{
-		{0x1A, 0x1C, 0x2C},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0xEF, 0x7D, 0x57},{0xFF, 0xCD, 0x75},{0xA7, 0xF0, 0x70},{0x38, 0xB7, 0x64},{0x25, 0x71, 0x79},
-		{0x29, 0x36, 0x6F},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xF4, 0xF4, 0xF4},{0x94, 0xB0, 0xC2},{0x56, 0x6C, 0x86},{0x33, 0x3C, 0x57}
-	},
-	{
-		{0x1A, 0x1C, 0x2C},{0x5D, 0x27, 0x5D},{0x85, 0x4C, 0x30},{0xD2, 0x7D, 0x2C},{0xFF, 0xCD, 0x75},{0xA7, 0xF0, 0x70},{0x6D, 0xAA, 0x2C},{0x34, 0x65, 0x24},
-		{0x30, 0x34, 0x6D},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xF4, 0xF4, 0xF4},{0x94, 0xB0, 0xC2},{0x56, 0x6C, 0x86},{0x33, 0x3C, 0x57}
-	},
-	{
-		{0x00, 0x00, 0x00},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0xEF, 0x7D, 0x57},{0xFF, 0xCD, 0x75},{0xA7, 0xF0, 0x70},{0x38, 0xB7, 0x64},{0x25, 0x71, 0x79},
-		{0x29, 0x36, 0x6F},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xFF, 0xFF, 0xFF},{0xB6, 0xB6, 0xB6},{0x56, 0x6C, 0x86},{0x3C, 0x3C, 0x3C}
-	},
-	{
-		{0x1A, 0x1C, 0x2C},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0xEF, 0x7D, 0x57},{0xCE, 0xC6, 0x8D},{0xA7, 0xF0, 0x70},{0x79, 0x9D, 0x40},{0x48, 0x5D, 0x3C},
-		{0x29, 0x36, 0x6F},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xF4, 0xF4, 0xF4},{0x7D, 0x99, 0x9D},{0x71, 0x71, 0x61},{0x4E, 0x4A, 0x4E}
-	},
-	{
-		{0x00, 0x00, 0x00},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0xE0, 0x50, 0x00},{0xFF, 0x78, 0x30},{0xA7, 0xF0, 0x70},{0x38, 0xB7, 0x64},{0x25, 0x71, 0x79},
-		{0x29, 0x36, 0x6F},{0x40, 0x40, 0xFF},{0x41, 0xA6, 0xF6},{0x60, 0xD0, 0xE0},{0xFF, 0xFF, 0xFF},{0x94, 0xB0, 0xC2},{0x56, 0x6C, 0x86},{0x33, 0x3C, 0x57}
-	},
-	{
-		{0x14, 0x0C, 0x1C},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0x75, 0x55, 0x48},{0xFF, 0xCD, 0x75},{0xA7, 0xF0, 0x70},{0x50, 0x75, 0x3C},{0x3C, 0x50, 0x28},
-		{0x29, 0x36, 0x6F},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xF4, 0xF4, 0xF4},{0x94, 0xB0, 0xC2},{0x56, 0x6C, 0x86},{0x33, 0x3C, 0x57}
-	},
-	{
-		{0x1A, 0x1C, 0x2C},{0x5D, 0x27, 0x5D},{0xB1, 0x3E, 0x53},{0xEF, 0x7D, 0x57},{0xFF, 0xCD, 0x75},{0xA7, 0xF0, 0x70},{0x38, 0xB7, 0x64},{0x25, 0x71, 0x79},
-		{0x29, 0x36, 0x6F},{0x3B, 0x5D, 0xC9},{0x41, 0xA6, 0xF6},{0x73, 0xEF, 0xF7},{0xF4, 0xF4, 0xF4},{0x94, 0xB0, 0xC2},{0x5D, 0x61, 0x6D},{0x33, 0x3C, 0x57}
-	},
+	--TODO add palettes
+		"1A1C2C5D275DB13E53EF7D57FFCD75A7F07038B76425717929366F3B5DC941A6F673EFF7F4F4F494B0C2566C86333C57",
+		"1A1C2C5D275DB13E53EF7D57FFCD75A7F07038B76425717929366F3B5DC941A6F673EFF7F4F4F494B0C2566C86333C57",
+		"1A1C2C5D275D854C30D27D2CFFCD75A7F0706DAA2C34652430346D3B5DC941A6F673EFF7F4F4F475716134446D202020",
+		"0000005D275DB13E53EF7D57DAD45EA7F07038B76425717929366F3B5DC941A6F673EFF7FFFFFFB6B6B6566C863C3C3C",
+		"140C1C5D275DB13E53EF7D57CEC68DA7F070799D40485D3C29366F3B5DC941A6F673EFF7F4F4F47D999D7171614E4A4E",
+		"0000005D275DB13E53E05000FF7830A7F07038B76425717929366F4040FF41A6F660D0E0FFFFFF94B0C2566C86333C57",
+		"1A1C2C5D275DB13E53755548FFCD75A7F07050753C3C502829366F3B5DC757161673EFF7F4F4F494B0C2566C86333C57",
+		"1A1C2C5D275DB13E53EF7D57FFCD75A7F07038B76425717929366F3B5DC941A6F673EFF7F4F4F494B0C25D616D443C50",
 }
 
 timescale = 1
@@ -96,6 +72,23 @@ mapgame={
 	"MARIO BROS.",
 	"Super Meat Boy",
 	"SUPER NOVA"
+}
+
+mapeffect={
+	--[[
+	
+	1:white pixels
+	2:mountain with palette 15
+
+	--]]
+	1,
+	1,
+	2,
+	1,
+	1,
+	0,
+	1,
+	1
 }
 
 local scene = "INTRO"
@@ -200,7 +193,7 @@ function sfunc.new(f, duration, func, tbl, timing)
 end
 
 function Players.new(c, v, npc)
-	return {chara=c, pos=v, hp=0.0, hitstop=0, flip=0, velocity=Vector2.new(0, 0), doublejumps=0, frame=0, base = 0, attacks=0, animuntil=0, lastgrounded=0, jumped=-10, score=0, reflect=0, smash_invincible=0, invincible=0, shake=0, npcv={jumped=0, grounded=false}, npc=npc, sfunc={}, button={false, false, false, false, false, false}, buttonpress={false, false, false, false, false, false}}
+	return {chara=c, pos=v, hp=0.0, hitstop=0, flip=0, velocity=Vector2.new(0, 0), doublejumps=0, frame=0, base = 0, attacks=0, attacktype=0, attackedon=0, animuntil=0, lastgrounded=0, jumped=-10, noctrl=0, score=0, reflect=0, smash_invincible=0, invincible=0, shake=0, npcv={jumped=0, grounded=false}, npc=npc, sfunc={}, button={false, false, false, false, false, false}, buttonpress={false, false, false, false, false, false}}
 end
 
 function Characters.new(n, col, acol, ck, sid, st, wgt, special, splength, charaAI, iconsprid, iconck)
@@ -235,6 +228,7 @@ function Init()
 	
 	table.insert(Characters, Characters.new("Nesbox", 10, 9, 0, 256, 5, 5,
 	function(player, opponent)
+		player.noctrl = 1
 		table.insert(player.sfunc, sfunc.new(frames, 15, function(player)
 			print("dmgcirc()|", player.pos.x - camerapos.x - 25, player.pos.y - camerapos.y - 11, 14)
 			print("dmgcirc()|", player.pos.x - camerapos.x - 24, player.pos.y - camerapos.y - 12, 12)
@@ -279,6 +273,7 @@ function Init()
 		else
 			id = 1
 		end
+		player.noctrl = 2
 
 		table.insert(Particles, Particles.new(3, player.pos + Vector2.new(4, 4), {id=id, damage=Characters[player.chara].str * 0.5, flip=player.flip}))
 	end, 20,
@@ -293,6 +288,7 @@ function Init()
 
 	table.insert(Characters, Characters.new("8-BIT Panda", 13, 14, 0, 272, 7, 3,
 	function(player, opponent)
+		player.noctrl = 4
 		player.invincible = 5
 		player.reflect = 2
 	end, 20,
@@ -329,6 +325,7 @@ function Init()
 
 	table.insert(Characters, Characters.new("Traveler", 14, 2, 0, 288, 6, 4,
 	function(player, opponent)
+		player.noctrl = 5
 		player.reflect = 5
 	end, 7,
 	
@@ -343,6 +340,7 @@ function Init()
 
 	table.insert(Characters, Characters.new("Reimu", 2, 1, 0, 296, 6, 4,
 	function (player, opponent)
+		player.noctrl = 10
 		spr(482, player.pos.x - camerapos.x - 12, player.pos.y - camerapos.y - 12, 0, 2, 0, 0, 2, 2)
 		table.insert(player.sfunc, sfunc.new(frames + 1, 15, function ()
 			spr(480, player.pos.x - camerapos.x - 12, player.pos.y - camerapos.y - 12, 0, 2, 0, 0, 2, 2)
@@ -375,8 +373,44 @@ function Init()
 
 	table.insert(Characters, Characters.new("Impostor", 2, 10, 6, 312, 7, 3,
 	function (player, opponent)
+		local flip = 0
+		if player.flip == 1 then
+			flip = 1
+		end
+		local function x(x)
+			return x + 5 + player.flip * -10 - camerapos.x
+		end
+
+		local function y(y)
+			return y - camerapos.y
+		end
+
+		table.insert(player.sfunc, sfunc.new(frames, 5, function ()
+			spr(484, x(player.pos.x), y(player.pos.y) - 8, 6, 1, flip, 0, 1, 1)
+		end, nil, 1))
 		
-	end, 5,
+		table.insert(player.sfunc, sfunc.new(frames+5, 5, function ()
+			if posOnRect(x(player.pos.x)-1, y(player.pos.y)-1 - 3, 10, 10, opponent.pos) then
+				opponent.hitstop = opponent.hitstop + Vector2.magnitude(player.velocity) + 2
+				Smash(player.pos, player.velocity, Characters[player.chara].str, opponent)
+			end
+
+			spr(484, x(player.pos.x), y(player.pos.y) - 3, 6, 1, flip, 0, 1, 1)
+		end, nil, 1))
+		
+		table.insert(player.sfunc, sfunc.new(frames+10, 5, function ()
+			spr(484, x(player.pos.x), y(player.pos.y) - 8, 6, 1, flip, 0, 1, 1)
+		end, nil, 1))
+		
+		table.insert(player.sfunc, sfunc.new(frames+15, 5, function ()
+			if posOnRect(x(player.pos.x)-1, y(player.pos.y)-1 - 3, 10, 10, opponent.pos) then
+				opponent.hitstop = opponent.hitstop + Vector2.magnitude(player.velocity) + 2
+				Smash(player.pos, player.velocity, Characters[player.chara].str, opponent)
+			end
+
+			spr(484, x(player.pos.x), y(player.pos.y) - 3, 6, 1, flip, 0, 1, 1)
+		end, nil, 1))
+	end, 20,
 
 	function (player, opponent)
 		
@@ -418,7 +452,7 @@ function Smash(pos, vel, str, target)
 	table.insert(Particles, Particles.new(2, dist + pos + Vector2.new(0, 3)))
 
 	target.smash_invincible = 1
-	target.velocity = smashvel * math.clamp(Vector2.magnitude(target.velocity * 0.3), 1, 10)
+	target.velocity = smashvel * math.clamp(Vector2.magnitude(target.velocity * 0.3), 1, 10) * 1.3
 end
 
 
@@ -453,6 +487,9 @@ function CharacterBehaviour(id, opponent)
 
 	if player.reflect > 0 then
 		player.reflect = player.reflect - 1
+	end
+	if player.noctrl > 0 then
+		player.noctrl = player.noctrl - 1
 	end
 	if player.invincible > 0 then
 		player.invincible = player.invincible - 1
@@ -688,13 +725,24 @@ function CharacterBehaviour(id, opponent)
 
 		--Limit attack speed
 		if player.npc == 6 then attackspeed = 0 end
-		if player.npc == 5 then attackspeed = math.random(1, 8) end
-		if player.npc == 4 then attackspeed = math.random(2, 12) end
-		if player.npc == 3 then attackspeed = math.random(5, 15) end
-		if player.npc == 2 then attackspeed = math.random(8, 18) end
-		if player.npc == 1 then attackspeed = math.random(12, 26) end
+		if player.npc == 5 then attackspeed = math.random(15, 17) end
+		if player.npc == 4 then attackspeed = math.random(16, 19) end
+		if player.npc == 3 then attackspeed = math.random(18, 22) end
+		if player.npc == 2 then attackspeed = math.random(21, 25) end
+		if player.npc == 1 then attackspeed = math.random(24, 30) end
 		if player.animuntil + attackspeed > frames then
 			player.buttonpress[5] = false
+		end
+
+		if player.npc > 2 then
+			if opponent.reflect > 0 then
+				player.buttonpress[5] = false
+			end
+			if opponent.invincible > 0 then
+				if player.npc > 4 then
+					player.buttonpress[5] = false
+				end
+			end
 		end
 
 		player.buttonpress[6] = chara.charaAI(player, opponent)
@@ -702,11 +750,13 @@ function CharacterBehaviour(id, opponent)
 	end
 	
 	----Control
-	if player.hitstop == 0 then
-		--Move
+	--Move
+	if player.noctrl <= 0 then
 		if player.button[3] then player.velocity.x = player.velocity.x - 0.25 * timescale player.flip = 1 end
 		if player.button[4] then player.velocity.x = player.velocity.x + 0.25 * timescale player.flip = 0 end
-		
+	end
+
+	if player.hitstop <= 0 and player.noctrl <= 0 then
 		if player.buttonpress[1] then
 			if player.doublejumps < 2 then
 				player.npcv.jumped = frames
@@ -718,7 +768,11 @@ function CharacterBehaviour(id, opponent)
 					table.insert(Particles, Particles.new(2, player.pos + Vector2.new(4, 8)))
 				end
 				player.doublejumps = player.doublejumps + 1
-				player.velocity.y = -3 * timescale / (chara.weight * 0.05 + 1)
+				if player.velocity.y < 3.5 then
+					player.velocity.y = -3 * timescale / (chara.weight * 0.05 + 1)
+				else
+					player.velocity.y = math.clamp(-player.velocity.y * 0.5 * timescale / (chara.weight * 0.05 + 1), -2.8, 0)
+				end
 			end
 		end
 		
@@ -733,45 +787,55 @@ function CharacterBehaviour(id, opponent)
 		if player.buttonpress[2] then
 			player.jumped = -10
 		end
-	end
-		
-	--Action
-	if player.animuntil < frames then
-		if player.buttonpress[5] then
-			player.attacks = player.attacks + 1
-			if grounded then
-				player.base = 4 + math.floor(player.attacks % 2)
-				player.animuntil = frames + 3
+
+		--Action
+		if player.animuntil < frames then
+			if player.buttonpress[5] then
+				player.noctrl = 2
+				player.attacks = player.attacks + 1
+				player.attackedon = frames
+				if grounded then
+					player.attacktype = 1
+					player.base = 4 + math.floor(player.attacks % 2)
+					player.animuntil = frames + 6
+					
+					spriteid = sprid + player.base
+				else
+					player.attacktype = 2
+					player.base = 3
+					player.frame = 0
+					player.animuntil = frames + 9
+					spriteid = sprid + player.base
+				end
+			elseif player.buttonpress[6] then
+				player.attacks = player.attacks + 1
+				player.base = 6 + math.floor(player.attacks % 2)
+				player.animuntil = frames + chara.speciallength
 				
 				spriteid = sprid + player.base
+
+				chara.special(player, opponent, id)
+			end
+		end
+
+		if player.attackedon + 2 == frames then
+			if player.attacktype == 1 then
 				if posOnRect(player.pos.x + 4 + player.flip * -27, player.pos.y - 5, 27, 19, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
 					opponent.hitstop = opponent.hitstop + chara.str * 0.12
+					opponent.noctrl = 3 * opponent.hitstop
 					Smash(player.pos, player.velocity, chara.str, opponent)
 				else
 					sfx(8, 0, 20, 1)
 				end
-
-			else
-				player.base = 3
-				player.frame = 0
-				player.animuntil = frames + 10
-				spriteid = sprid + player.base
-
+			elseif player.attacktype == 2 then
 				if posOnRect(player.pos.x - 5, player.pos.y - 5, 18, 24, Vector2.new(opponent.pos.x + 4, opponent.pos.y + 4)) then
 					opponent.hitstop = opponent.hitstop + chara.str * 0.015 + math.clamp(math.floor(player.velocity.y * 7) * 0.1, chara.str * 0.07, chara.str * 2.5)
+					opponent.noctrl = 6 * opponent.hitstop
 					Smash(player.pos, player.velocity, chara.str, opponent)
 				else
 					sfx(8)
 				end
 			end
-		elseif player.buttonpress[6] then
-			player.attacks = player.attacks + 1
-			player.base = 6 + math.floor(player.attacks % 2)
-			player.animuntil = frames + chara.speciallength
-			
-			spriteid = sprid + player.base
-
-			chara.special(player, opponent, id)
 		end
 	end
 end
@@ -821,30 +885,30 @@ end
 
 function RenderParticle()
 	local particle = {
-		function(idx, pos, spawned, tbl)
-			ellib(pos.x - camerapos.x, pos.y - camerapos.y, 6 / (frames - spawned), 3 / (frames - spawned), 13)
-			if frames - spawned > 6 then
+		function(idx, pos, spawned, tbl, elapsed)
+			ellib(pos.x - camerapos.x, pos.y - camerapos.y, 6 / elapsed, 3 / elapsed, 13)
+			if elapsed > 6 then
 				table.remove(Particles, idx)
 			end
 		end,
-		function(idx, pos, spawned, tbl)
-			circ(pos.x - camerapos.x, pos.y - camerapos.y, 6 / (frames - spawned), 14)
-			circ(pos.x - camerapos.x, pos.y - camerapos.y, 2 / (frames - spawned), 13)
-			if frames - spawned > 6 then
+		function(idx, pos, spawned, tbl, elapsed)
+			circ(pos.x - camerapos.x, pos.y - camerapos.y, 6 / elapsed, 14)
+			circ(pos.x - camerapos.x, pos.y - camerapos.y, 2 / elapsed, 13)
+			if elapsed > 6 then
 				table.remove(Particles, idx)
 			end
 		end,
 
 		--[[
 		function(idx, pos, spawned, tbl)
-			trec(pos.x - 6 / (frames - spawned) - camerapos.x, pos.y - 6 / (frames - spawned) - camerapos.y, 12 / (frames - spawned), 12 / (frames - spawned), 24, 240, 16, 16, 0, 12 / (frames - spawned))
-			if frames - spawned > 12 then
+			trec(pos.x - 6 / elapsed - camerapos.x, pos.y - 6 / elapsed - camerapos.y, 12 / elapsed, 12 / elapsed, 24, 240, 16, 16, 0, 12 / elapsed)
+			if elapsed > 12 then
 				table.remove(Particles, idx)
 			end
 		end,
 		--]]
 
-		function(idx, pos, spawned, tbl)
+		function(idx, pos, spawned, tbl, elapsed)
 			local mul = 1
 			local rot = 0
 
@@ -853,7 +917,7 @@ function RenderParticle()
 				rot = math.pi
 			end
 
-			local cpos = Vector2.new(pos.x + (frames - spawned) * 8 * mul - 12, pos.y - 4)
+			local cpos = Vector2.new(pos.x + elapsed * 8 * mul - 12, pos.y - 4)
 			trec(cpos.x - camerapos.x, cpos.y - camerapos.y, 24, 8, 0, 224, 24, 8, 0, rot)
 
 			local player = Players[tbl.id]
@@ -864,14 +928,24 @@ function RenderParticle()
 				Smash(cpos + Vector2.new(12, 4), Vector2.new(9 * mul, 0), tbl.damage * 0.7, player)
 			end
 
-			if frames - spawned > 80 then
+			if elapsed > 80 then
+				table.remove(Particles, idx)
+			end
+		end,
+		function(idx, pos, spawned, tbl, elapsed)
+			local cpos = Vector2.new(300 - elapsed * tbl[1].x, pos.y + elapsed * tbl[1].y)
+
+			local rpos = Vector2.new(cpos.x-camerapos.x*1.5, cpos.y-camerapos.y*1.5)
+			pix(rpos.x, rpos.y, tbl[2])
+
+			if rpos.y > 135 or rpos.x < 0 then
 				table.remove(Particles, idx)
 			end
 		end
 	}
 
 	for i, val in ipairs(Particles) do
-		particle[val.id](i, val.pos, val.spawned, val.tbl)
+		particle[val.id](i, val.pos, val.spawned, val.tbl, frames - val.spawned)
 	end
 end
 
@@ -887,10 +961,23 @@ function ProcessScheduledFunc(timing, sfunc)
 	end
 end
 
-
 function BOOT()
 	Init()
-	--StartBattle(3, 1, 2)
+	--StartBattle(3, 3, 3, 0, 6)
+end
+
+function RenderMapEffect(id)
+	if id == 1 then
+		table.insert(Particles, Particles.new(4, Vector2.new(0, math.random(-100, 200)), {Vector2.new(math.random(1,3), math.random(-1, 3)), 12}))
+		table.insert(Particles, Particles.new(4, Vector2.new(0, math.random(-100, 200)), {Vector2.new(math.random(1,3), math.random(-1, 3)), 13}))
+		table.insert(Particles, Particles.new(4, Vector2.new(0, math.random(-100, 200)), {Vector2.new(math.random(1,3), math.random(-1, 3)), 14}))
+	elseif id == 2 then
+		local x = camerapos.x/2.5
+		local y = camerapos.y/2.5
+		tri(0-x, 135-y, 60-x, 74-y, 120-x, 135-y, 14)
+		tri(120-x, 135-y, 180-x, 74-y, 240-x, 135-y, 14)
+		rect(0-x, 135-y, 239, 100, 14)
+	end
 end
 
 function TIC()
@@ -901,7 +988,7 @@ function TIC()
 				frames = 500
 			end
 		end
-		
+		--ik this is unefficient and crazy
 		if frames < 100 then
 			trec(-140, frames*2, 512, 7, 14, 223, 1, 1, -1, 0)
 		elseif frames == 100 then
@@ -1076,17 +1163,19 @@ function TIC()
 				local pos = Vector2.new((i-1)*38+9+title.stageselect.xpos, 8)
 
 				if title.cursor == i then
+					vbank(1)
 					if title.applypal then
-						paltbl(mappal[i])
+						loadPalette(mappal[i])
 					else
-						paltbl(mappal[1])
+						loadPalette(mappal[1])
 					end
 
 					framecolor = 12
-					rect(9, 29, 224, 104, mapbg[i])
+					rect(10, 30, 222, 102, mapbg[i])
 					map((i-1) * 30 % 240 + 1, (i-1) // 8 * 17 + 2, 29, 13, 9, 28, 0, 1, remap)
 					print(mapname[i], 12, 32, 12)
 					print(mapgame[i], 16, 39, 13, true, 1, true)
+					vbank(0)
 					rectb(9, 29, 224, 104, 14)
 					local _, _, click = mouse()
 					if btnp(4) then
@@ -1106,6 +1195,9 @@ function TIC()
 
 			if btnp(2) then title.cursor = title.cursor - 1 title.stageselect.localcursor = title.stageselect.localcursor - 1 end
 			if btnp(3) then title.cursor = title.cursor + 1 title.stageselect.localcursor = title.stageselect.localcursor + 1 end
+			
+			if btnp(0) then title.cursor = title.cursor - 3 title.stageselect.localcursor = title.stageselect.localcursor - 3 end
+			if btnp(1) then title.cursor = title.cursor + 3 title.stageselect.localcursor = title.stageselect.localcursor + 3 end
 
 			if title.stageselect.localcursor > 5 and title.cursor <= #mapbg then
 				title.stageselect.x = title.stageselect.x - 1
@@ -1117,12 +1209,21 @@ function TIC()
 				title.stageselect.localcursor = 0
 			end
 
-			title.stageselect.xpos = math.lerp(title.stageselect.xpos, title.stageselect.x*38, 0.75)
+			title.stageselect.xpos = math.lerp(title.stageselect.xpos, title.stageselect.x*38, 0.2)
 
 			title.stageselect.localcursor = math.clamp(title.stageselect.localcursor, 0, 5)
-			title.cursor = math.clamp(title.cursor, 1, #mapbg)
+			local looped = false
+			title.cursor, looped = math.loop(title.cursor, 1, #mapbg)
+			if looped then
+				if title.cursor == 1 then
+					title.stageselect.x = 0
+					title.stageselect.localcursor = 0
+				elseif title.cursor == #mapbg then
+					title.stageselect.x = -#mapbg + 6
+					title.stageselect.localcursor = 5
+				end
+			end
 		elseif title.state == "CharaSelect" then
-			vbank(1)
 			cls(15)
 			if btnp(5) then
 				if title.ready then
@@ -1262,16 +1363,20 @@ function TIC()
 			ProcessScheduledFunc(1, Players[2].sfunc)
 
 			vbank(0)
+			loadPalette(mappal[mapid+1])
+			RenderMapEffect(mapeffect[mapid+1])
 			map(mapid%8*30, mapid//8*17, 30, 17, -camerapos.x, -camerapos.y, 0, 1, remap)
 
 			local p1 = Players[1]
 			CharacterBehaviour(1, Players[2])
 			CharacterBehaviour(2, p1)
 			
+			--draw character on vbank 0 to draw black
 			CharacterRender(1)
 			CharacterRender(2)
 
 			vbank(1)
+			loadPalette(mappal[1])
 			poke(0x03FF8, 0)
 			cls(0)
 
@@ -1333,13 +1438,17 @@ function TIC()
 		if btn(4) and btn(5) then
 			scene = "TITLE"
 			title.state = "Normal"
-			paltbl(mappal[1])
+			loadPalette(mappal[1])
 
 			music(0)
 		end
 	end
-
-	vbank(1)
+	
+	if scene == "TITLE" and title.state == "StageSelect" then
+		vbank(0)
+	else
+		vbank(1)
+	end
 	rectb(0, 0, 240, 136, 13)
 	vbank(0)
 	
@@ -1351,7 +1460,7 @@ function TIC()
 	end
 	_, _, previousmouse = mouse()
 
-	frames = frames + 1
+	frames = frames + timescale
 end
 
 --utility functions
@@ -1446,14 +1555,14 @@ function math.clamp(val, min, max)
 	return math.min(math.max(val, min), max)
 end
 
-function math.lerp(a, b, t)
-    return (1 - t) * a + t * b
+function math.loop(val, min, max)
+	if val < min then return max, true end
+	if val > max then return min, true end
+	return val, false
 end
 
-function paltbl(tbl)
-	for i = 1, 16, 1 do
-		pal(i-1, tbl[i][1], tbl[i][2], tbl[i][3])
-	end
+function math.lerp(a, b, t)
+    return (1 - t) * a + t * b
 end
 
 function ButtonSpr(name, x, y)
@@ -1482,8 +1591,20 @@ function pal(i,r,g,b)
 	end
 end
 
+--Load palette string
+function loadPalette(palette)
+	for i=0,15 do
+		r=tonumber(string.sub(palette,i*6+1,i*6+2),16)
+		g=tonumber(string.sub(palette,i*6+3,i*6+4),16)
+		b=tonumber(string.sub(palette,i*6+5,i*6+6),16)
+		poke(0x3FC0+(i*3)+0,r)
+		poke(0x3FC0+(i*3)+1,g)
+		poke(0x3FC0+(i*3)+2,b)
+	end
+end
+
 vbank(1)
-paltbl(mappal[1])
+loadPalette(mappal[1])
 vbank(0)
 
 -- <TILES>
@@ -1502,7 +1623,7 @@ vbank(0)
 -- 026:3333333033333333222223332222223322222233222222331222223311222233
 -- 027:2333333302333333000000000000000000000000000000000000000000000000
 -- 028:7676767677777777232223222222222222232232222222222322322322222222
--- 030:000000000000000000000000000000000000dd00000fffd000fffffd0fffffff
+-- 030:000000000000000000000000000000000000dd00000eeed000eeeeed0eeeeeee
 -- 032:ddeeeeffddeeeeffddeeeeffddeeeeffddeeeeffddeeeeffddeeeeffddeeeeff
 -- 033:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 -- 034:ffeeeeddffeeeeddffeeeeddffeeeeddffeeeeddffeeeeddffeeeeddffeeeedd
@@ -1616,14 +1737,14 @@ vbank(0)
 -- 037:00ddd00000dfff0000fff0000022200002ddff0002dff2d000202dcd00d0d0dd
 -- 038:0011100000122200001110000022200002111000021110000020200000101000
 -- 039:0011100000122200001110000022200002111000021110000020200000101000
--- 040:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444000dd140001c222dc001c110c
--- 041:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444000dd140001c212dc001c010c
--- 042:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444000dd140001cc22dc0010110c
--- 043:00000d000000f1d001d0ff2c0cdf4ff0c214fff012444ee01d04fe2c0cc0ecc0
--- 044:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444c00dd140e01c222d0001c1100
--- 045:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444000dd14d001c2220e001c110c
--- 046:0c0000c0c22ffe2cd1ffeeec0ff4141e00f4444000dd1400011ccdc000111100
--- 047:0c0000c0c22ffe2cd1ffeeec0ff4141e00f4444c00dd140301d3c2d000111100
+-- 040:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444000dd140000c222dc001c110c
+-- 041:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444000dd140000c212dc001c010c
+-- 042:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444000dd140000cc22dc0010110c
+-- 043:00000d000000f1d000d0ff2c0cdf4ff0c214fff012444ee01d04fe2c0cc0ecc0
+-- 044:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444c00dd140e00c222d0001c1100
+-- 045:0c0000c0c22ffe2cd1ffeeec0ff4f4fe00f4444000dd14d000c2220e001c110c
+-- 046:0c0000c0c22ffe2cd1ffeeec0ff4141e00f4444000dd1400001ccdc000111100
+-- 047:0c0000c0c22ffe2cd1ffeeec0ff4141e00f4444c00dd140300d3c2d000111100
 -- 048:aaaaaaaa222222222222222222022202220222022222222222222222a22aa22a
 -- 049:aaaaaaaa222222222222222222202220222022202222222222222222a22aa11a
 -- 050:aaaaaaaa222222222222222222202220222022202222222222222222a11aa22a
@@ -1685,6 +1806,7 @@ vbank(0)
 -- 225:2200000030220000444020002034320023044020204034203403040223222432
 -- 226:0000000000000001000002220001210000022010002102000020102101200010
 -- 227:0000000010000000222000000012100001022000002012001201020001000210
+-- 228:000666660120666602206666600fe666666efc666666edc666666edc6666666d
 -- 229:5ddddddddd888888d9999999d9888888d9ddddddd9dd0dddd9dd0dddd9dd0ddd
 -- 230:ddddd5558888dd5599990d5588890d55ddd90ddd0dd90d0d0dd90d0d0dd90d0d
 -- 231:0011110001233330212313123123333233222222212322320122332000112100
@@ -1704,14 +1826,14 @@ vbank(0)
 
 -- <MAP>
 -- 003:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- 004:000000000000000000000000003132323300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d2d2d2d2d2d200000000000000000000000000000000000000000000000000061616260000000000000000000000000000000000000000000000001000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e7e6e6e70000000000000000000000000000000000000000000000000000000000d7d7d7d700000000000000000000000000
--- 005:00000000000000000000001000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000020000000000000000000000000000000000000000000001000000000000020000000000000000000000000000000000000000000e4e4e4e40000e4e4e4e40000000000000000000000000000000000000000001000000000000020000000000000000000000000000000000000000000f70000f700000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- 006:00000000000000000000313233000000003132330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d2d2d200000000d2d2d20000000000000000000000000000000000000000061626000000000616260000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d6d6d6d6d6d600000000d6d6d6d6d6d60000000000000000000000000000000000f70000f7000000e7e6e6e700000000000000000000000000000000d7d7d700000000000000000000d7d7d700000000000000
+-- 004:000000000000000000000000003132323300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d2d2d2d2d2d200000000000000000000000000000000000000000000000000061616260000000000000000000000000000000000000000000000001000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e7e6e6e700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- 005:00000000000000000000001000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000020000000000000000000000000000000000000000000001000000000000020000000000000000000000000000000000000000000e4e4e4e40000e4e4e4e40000000000000000000000000000000000000000001000000000000020000000000000000000000000000000000000000000f70000f700000000200000000000000000000000000000000000000000000000d7d7d7d7d7d7000000000000000000000000
+-- 006:00000000000000000000313233000000003132330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d2d2d200000000d2d2d20000000000000000000000000000000000000000061626000000000616260000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d6d6d6d6d6d600000000d6d6d6d6d6d60000000000000000000000000000000000f70000f7000000e7e6e6e7000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- 007:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a5b50000000000000000000000000000000000000000008500000095000085000000950000000000000000000000000000000000000000000000e200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f70000f7000000f70000f7000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- 008:0000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000002000000000000000000000000000000000000000000000e100000000a6b60000000000000000000000000000000000000000008600000096000086000000960000000000000000000000000000000000000000000000e300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f70000f7000000f70000f7000000000000000000000000000000000000000010000000000000200000000000000000000000
--- 009:0000000000000000000111111111111111111111210000000000000000000000000000000000004151511111111191119191a1000000000000000000000000000000000000c1c1c1c1c1c1c1c1c1c1c1c1000000000000000000000000000000000000051515151515151515151505000000000000000000000000000000000000c4c4c4c5d5d5d5e5c4c4c4c4000000000000000000000000000000000000c6c6c6c6c6c6c6c6c6c6c6c6000000000000000000000000000000000000f5f5f5f5f5f5f5f5f5f5f5f5000000000000000000000000000000000000c7c7c7c7c7c7c7c7c7c7c7c7000000000000000000
--- 010:00000000000000000003131412121212121204132300000000000000000000000000000000000043541252121212129212842300000000000000000000000000000000000000c2c2c2c2c2c2c2c2c2c20000000000000000000000000000000000000025121207121212120712122500000000000000000000000000000000000000d4d4d4d4d4d4d4d4d4d400000000000000000000000000000000000000c6c6c6c6c6c6c6c6c6c6c6c600000000000000000000000000000000000000f6f6f5f5f6f6f5f6f5f6000000000000000000000000000000000000000000c7c7c7c7c7c7c7c70000000000000000000000
--- 011:00000000000000000000000314121212120423000000000000000000000000000000000000000000431314121212128413a300000000000000000000000000000000000000000000c2c2c2c2c2c2000000000000000000000000000000000000000000051515051212121205151505000000000000000000000000000000000000000000d4d4d4d4d4d400000000000000000000000000000000000000000000c6c6c6c6c6c6c6c6c6c6000000000000000000000000000000000000000000f6f6f6f6f6f6f6f600000000000000000000000000000000000000000000000000c7c70000000000000000000000000000
+-- 009:0000000000000000000111111111111111111111210000000000000000000000000000000000004151511111111191119191a1000000000000000000000000000000000000c1c1c1c1c1c1c1c1c1c1c1c1000000000000000000000000000000000000051515151515151515151505000000000000000000000000000000000000c4c4c4c5d5d5d5e5c4c4c4c4000000000000000000000000000000000000c6c6c6c6c6c6c6c6c6c6c6c6000000000000000000000000000000000000f5f5f5f5f5f5f5f5f5f5f5f50000000000000000000000000000000000d7d7c7c7c7c7c7c7c7c7c7c7d7d70000000000000000
+-- 010:00000000000000000003131412121212121204132300000000000000000000000000000000000043541252121212129212842300000000000000000000000000000000000000c2c2c2c2c2c2c2c2c2c20000000000000000000000000000000000000025121207121212120712122500000000000000000000000000000000000000d4d4d4d4d4d4d4d4d4d400000000000000000000000000000000000000c6c6c6c6c6c6c6c6c6c6c6c600000000000000000000000000000000000000f6f6f5f5f6f6f5f6f5f600000000000000000000000000000000000000000000c7c7c7c7c7c7000000000000000000000000
+-- 011:00000000000000000000000314121212120423000000000000000000000000000000000000000000431314121212128413a300000000000000000000000000000000000000000000c2c2c2c2c2c2000000000000000000000000000000000000000000051515051212121205151505000000000000000000000000000000000000000000d4d4d4d4d4d400000000000000000000000000000000000000000000c6c6c6c6c6c6c6c6c6c6000000000000000000000000000000000000000000f6f6f6f6f6f6f6f60000000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- 012:00000000000000000000000003131313132300000000000000000000000000000000000000000000000003531313132300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000025120712122500000000000000000000000000000000000000000000000000d4d4d4d4000000000000000000000000000000000000000000000000c6c6c6c6c6c6c6c6000000000000000000000000000000000000000000000000f6f6f6f600000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- 013:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000051515151505000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 -- </MAP>
@@ -1726,19 +1848,20 @@ vbank(0)
 -- </WAVES>
 
 -- <SFX>
--- 000:060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600309000000000
+-- 000:060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600307000000000
 -- 001:04f771f7d1f7f1f7f100f100f100f400f400040004000400040004000400040004000400040004000400040004000400040004000400040004000400800000310000
 -- 002:04f50400040014002400340064007400a400b400d400d400e400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400880000f10101
 -- 003:04f741007100a100d400e400f400f4000400040004000400040004000400040004000400040004000400040004000400040004000400040004000400880011610101
 -- 004:040804001400140024002400340034004400440054005400640074007400840084009400a400a400b400c400e400f400f400f400f400f400f400f400850000000101
 -- 005:04f834f794f7f4f7f400f400f400f400f400040004000400040004000400040004000400040004000400040004000400040004000400040004000400800000310101
--- 006:03000300030031007100760066004600460076009600a60086009600b600c600d600d600d600c600a600a600a600a600a600b600d600e600e600c600414000ff0000
+-- 006:03000300030031007100760066004600460076009600a60086009600b600c600d600d600d600c600a600a600a600a600a600b600d600e600e600c600410000ff0000
 -- 007:40789290c2d0f2d002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200020002000200b09000310001
 -- 008:c40864f7a4f7f4f7f400f400f400f400f400040004000400040004000400040004000400040004000400040004000400040004000400040004000400800000310101
 -- 009:04f50400140054009400e400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400f400880000610101
 -- 010:060006000600060036006600860096009600a600b600c600c600d600e600f60006000600060006000600060006000600060006000600060006000600400000f10000
 -- 011:04080409040a041a041b041b042c142c142c143d244d244d345d445d446d546d647d747e848e948ea49eb49eb4aec4bec4bfd4cfd4dfe4e0e4f0f4f0870000000000
 -- 012:367836702670269016a016d016d006d006d006d006d0f6d0060006000600060006000600060006000600060006000600060006000600060006000600b19000b10001
+-- 013:04f811f071f0c1f0f1000100010001000100010001000100010001000100010001000100010001000100010001000100010001000100010001000100100402410101
 -- </SFX>
 
 -- <PATTERNS>
