@@ -9,12 +9,14 @@
 --CREDITS:
 --https://github.com/hayattgd/TIC-Smash#credits
 
---im updating this :)
+--i wasnt worked in this for while
 
+----VARIABLES----
 local GAME_VER = "v0.81"
 
 local frames = 0
 
+--Map variables--
 local mapid = 0
 
 tilecolor = {
@@ -49,8 +51,6 @@ mappal={
 		"1A1C2C5D275DB13E53755548FFCD75A7F07050753C3C502829366F3B5DC757161673EFF7F4F4F494B0C2566C86333C57",
 		"1A1C2C5D275DB13E53EF7D57FFCD75A7F07038B76425717929366F3B5DC941A6F673EFF7F4F4F494B0C25D616D443C50",
 }
-
-timescale = 1
 
 mapname={
 	"Battlefield",
@@ -92,6 +92,7 @@ mapeffect={
 }
 
 local scene = "INTRO"
+timescale = 1
 
 local camerapos
 
@@ -112,6 +113,10 @@ options = {
 	{ name="FPS", value=false }
 }
 
+local P1spawn = Vector2.new(0, 0)
+local P2spawn = Vector2.new(0, 0)
+
+--Table that holds every variables of title
 title_i = {
 	cursor = 0,
 	stageselect={
@@ -148,6 +153,8 @@ title_i = {
 
 title = {}
 
+----Functions----
+--Vector2 Functions--
 function Vector2.new(x, y)
 	return setmetatable({x=x, y=y}, Vector2)
 end
