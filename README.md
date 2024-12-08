@@ -102,7 +102,7 @@ Or, simply make new issue about bugs or suggestions. Sharing TIC-Smash to friend
 
 each versions saved as .tic format in [Version](./Version) folder or in [Releases](https://github.com/hayattgd/TIC-Smash/releases) as source code.
 
-### [v0.1](https://github.com/hayattgd/TIC-Smash/commit/b37b35128759e81abe977a724e7df8f2d099fb76)
+### [v0.1](https://github.com/hayattgd/TIC-Smash/tree/b37b35128759e81abe977a724e7df8f2d099fb76)
 
 **First release!**
 
@@ -112,7 +112,7 @@ each versions saved as .tic format in [Version](./Version) folder or in [Release
 - some effects / sfx on jumping / smashing
 - every character has same special
 
-### [v0.4](https://github.com/hayattgd/TIC-Smash/commit/0e18cdd7584aa21f99e0b26012ef73dbd715bbd7)
+### [v0.4](https://github.com/hayattgd/TIC-Smash/tree/0e18cdd7584aa21f99e0b26012ef73dbd715bbd7)
 
 **more stage / character!**
 
@@ -121,7 +121,7 @@ each versions saved as .tic format in [Version](./Version) folder or in [Release
 - each character has own special (wip)
 - stage and character is shuffled in each play
 
-### [v0.8](https://github.com/hayattgd/TIC-Smash/commit/9aa126f69df2ed529c36fb8fca0ba8f5ba85d4eb)
+### [v0.8](https://github.com/hayattgd/TIC-Smash/tree/9aa126f69df2ed529c36fb8fca0ba8f5ba85d4eb)
 
 **huge update!**
 
@@ -133,7 +133,7 @@ each versions saved as .tic format in [Version](./Version) folder or in [Release
 - added timer / result on battle (wip)
 - can choose character is controlled by bot or player
 
-### [v0.81](https://github.com/hayattgd/TIC-Smash/commits/0.81)
+### [v0.81](https://github.com/hayattgd/TIC-Smash/tree/99f4bcc97502a9c7c652ca15dc4ddf7b39a2f376)
 
 **qol + characters**
 
