@@ -103,7 +103,12 @@ local battlestarted = 0
 
 sfunc = {}
 
-Vector2 = {}
+Vector2 = {
+	new = function(x, y)
+		return setmetatable({x=x, y=y}, Vector2)
+	end
+}
+
 Characters = {}
 Particles = {}
 Players = {}
@@ -155,10 +160,6 @@ title = {}
 
 ----Functions----
 --Vector2 Functions--
-function Vector2.new(x, y)
-	return setmetatable({x=x, y=y}, Vector2)
-end
-
 function Vector2.magnitude(pos)
 	return math.sqrt(pos.x^2 + pos.y^2)
 end
